@@ -1,4 +1,5 @@
 ﻿using BackendProyectoFinal.DTOs;
+using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 
@@ -8,7 +9,8 @@ namespace BackendProyectoFinal.Services
     {
         private IRepository<CategoriaProducto> _repository;
         public List<string> Errors { get; }
-        public CategoriaProductoService(IRepository<CategoriaProducto> repository)
+        public CategoriaProductoService(
+            IRepository<CategoriaProducto> repository)
         {
             _repository = repository;
             Errors = new List<string>();
@@ -18,11 +20,9 @@ namespace BackendProyectoFinal.Services
         {
             var categorias = await _repository.Get();
             // CONVIERTE LOS TIPOS DE CATEGORIA A DTO
-            return categorias.Select(c => new CategoriaProductoDTO
-            {
-                Id = c.CategoriaProductoID,
-                Nombre = c.Nombre
-            });
+            return categorias.Select(c => 
+            CategoriaProductoMapper.ConvertCategoriaToDTO(c)
+            );
         }
         
         public async Task<CategoriaProductoDTO> GetById(int id)
@@ -30,12 +30,7 @@ namespace BackendProyectoFinal.Services
             var categoria = await _repository.GetById(id);
             if (categoria != null)
             {
-                var categoriaDTO = new CategoriaProductoDTO()
-                {
-                    Id = categoria.CategoriaProductoID,
-                    Nombre = categoria.Nombre
-                };
-                return categoriaDTO;
+                return CategoriaProductoMapper.ConvertCategoriaToDTO(categoria);
             }
             return null;
         }
@@ -49,12 +44,7 @@ namespace BackendProyectoFinal.Services
             await _repository.Add(categoria);
             await _repository.Save();
 
-            var categoriaDTO = new CategoriaProductoDTO()
-            {
-                Id = categoria.CategoriaProductoID,
-                Nombre = categoria.Nombre
-            };
-            return categoriaDTO;
+            return CategoriaProductoMapper.ConvertCategoriaToDTO(categoria) ;
         }
 
         public async Task<CategoriaProductoDTO> Update(CategoriaProductoUpdateDTO categoriaUpdateDTO)
@@ -67,12 +57,7 @@ namespace BackendProyectoFinal.Services
                 _repository.Update(categoria);
                 await _repository.Save();
 
-                var beerDTO = new CategoriaProductoDTO()
-                {
-                    Id = categoria.CategoriaProductoID,
-                    Nombre = categoria.Nombre
-                };
-                return beerDTO;
+                return CategoriaProductoMapper.ConvertCategoriaToDTO(categoria);
             }
             return null;
         }
@@ -82,11 +67,7 @@ namespace BackendProyectoFinal.Services
             var categoria = await _repository.GetById(id);
             if (categoria != null)
             {
-                var categoriaDTO = new CategoriaProductoDTO()
-                {
-                    Id = categoria.CategoriaProductoID,
-                    Nombre = categoria.Nombre
-                };
+                var categoriaDTO =  CategoriaProductoMapper.ConvertCategoriaToDTO(categoria);
 
                 _repository.Delete(categoria);
                 await _repository.Save();
