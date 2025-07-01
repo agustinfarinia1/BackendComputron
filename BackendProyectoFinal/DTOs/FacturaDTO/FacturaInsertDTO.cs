@@ -1,8 +1,7 @@
 ﻿namespace BackendProyectoFinal.DTOs
 {
-    public class FacturaDTO
+    public class FacturaInsertDTO
     {
-        public int FacturaID {  get; set; }
         public DateTime Fecha {  get; set; }
         public int TipoFactura {  get; set; }
         public string RazonSocial {  get; set; }

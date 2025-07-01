@@ -16,8 +16,8 @@ namespace BackendProyectoFinal.Repositories
         public async Task<CategoriaProducto> GetById(int id)
             => await _context.CategoriaProductos.FindAsync(id);
 
-        public async Task Add(CategoriaProducto beer)
-              => await _context.CategoriaProductos.AddAsync(beer);
+        public async Task Add(CategoriaProducto categoria)
+              => await _context.CategoriaProductos.AddAsync(categoria);
 
         public void Update(CategoriaProducto categoria)
         {
@@ -26,8 +26,8 @@ namespace BackendProyectoFinal.Repositories
             // AVISA A ENTITY FRAMEWORK QUE FUE MODIFICADO, PARA PODER REALIZAR EL SAVE
         }
 
-        public void Delete(CategoriaProducto beer)
-            => _context.CategoriaProductos.Remove(beer);
+        public void Delete(CategoriaProducto categoria)
+            => _context.CategoriaProductos.Remove(categoria);
 
         public async Task Save()
         {

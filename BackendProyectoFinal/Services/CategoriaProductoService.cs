@@ -1,5 +1,5 @@
 ﻿using BackendProyectoFinal.DTOs;
-using BackendProyectoFinal.Mappers;
+using BackendProyectoFinal.Utils.Mappers;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 
@@ -21,7 +21,7 @@ namespace BackendProyectoFinal.Services
             var categorias = await _repository.Get();
             // CONVIERTE LOS TIPOS DE CATEGORIA A DTO
             return categorias.Select(c => 
-            CategoriaProductoMapper.ConvertCategoriaToDTO(c)
+            CategoriaProductoMapper.ConvertCategoriaProductoToDTO(c)
             );
         }
         
@@ -30,7 +30,7 @@ namespace BackendProyectoFinal.Services
             var categoria = await _repository.GetById(id);
             if (categoria != null)
             {
-                return CategoriaProductoMapper.ConvertCategoriaToDTO(categoria);
+                return CategoriaProductoMapper.ConvertCategoriaProductoToDTO(categoria);
             }
             return null;
         }
@@ -44,7 +44,7 @@ namespace BackendProyectoFinal.Services
             await _repository.Add(categoria);
             await _repository.Save();
 
-            return CategoriaProductoMapper.ConvertCategoriaToDTO(categoria) ;
+            return CategoriaProductoMapper.ConvertCategoriaProductoToDTO(categoria) ;
         }
 
         public async Task<CategoriaProductoDTO> Update(CategoriaProductoUpdateDTO categoriaUpdateDTO)
@@ -57,7 +57,7 @@ namespace BackendProyectoFinal.Services
                 _repository.Update(categoria);
                 await _repository.Save();
 
-                return CategoriaProductoMapper.ConvertCategoriaToDTO(categoria);
+                return CategoriaProductoMapper.ConvertCategoriaProductoToDTO(categoria);
             }
             return null;
         }
@@ -67,7 +67,7 @@ namespace BackendProyectoFinal.Services
             var categoria = await _repository.GetById(id);
             if (categoria != null)
             {
-                var categoriaDTO =  CategoriaProductoMapper.ConvertCategoriaToDTO(categoria);
+                var categoriaDTO =  CategoriaProductoMapper.ConvertCategoriaProductoToDTO(categoria);
 
                 _repository.Delete(categoria);
                 await _repository.Save();
@@ -88,7 +88,6 @@ namespace BackendProyectoFinal.Services
 
         public bool Validate(CategoriaProductoUpdateDTO categoriaDTO)
         {
-            Console.WriteLine("Entro a Validate");
             if (_repository.Search(
                 c => c.Nombre.ToUpper() == categoriaDTO.Nombre.ToUpper()
                 && categoriaDTO.Id != c.CategoriaProductoID).Count() > 0)

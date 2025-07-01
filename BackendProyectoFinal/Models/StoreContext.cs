@@ -8,6 +8,9 @@ namespace BackendProyectoFinal.Models
             : base(options)
         { }
         public DbSet<CategoriaProducto> CategoriaProductos { get; set; }
+        public DbSet<Rol> Roles { get; set; }
+        public DbSet<Domicilio> Domicilios { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
         /*
         public DbSet<Producto> Productos { get; set; }
         public DbSet<TipoFactura> TipoFacturas { get; set; }

@@ -69,17 +69,17 @@ namespace BackendProyectoFinal.Controllers
             {
                 return BadRequest(_categoriaProductoService.Errors);
             }
-            var beerDTO = await _categoriaProductoService.Update(categoriaUpdateDTO);
+            var categoriaDTO = await _categoriaProductoService.Update(categoriaUpdateDTO);
 
-            return beerDTO == null ? NotFound() : Ok(beerDTO);
+            return categoriaDTO == null ? NotFound() : Ok(categoriaDTO);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var beerDTO = await _categoriaProductoService.Delete(id);
+            var categoriaDTO = await _categoriaProductoService.Delete(id);
 
-            return beerDTO == null ? NotFound() : Ok(beerDTO);
+            return categoriaDTO == null ? NotFound() : Ok(categoriaDTO);
         }
     }
 }

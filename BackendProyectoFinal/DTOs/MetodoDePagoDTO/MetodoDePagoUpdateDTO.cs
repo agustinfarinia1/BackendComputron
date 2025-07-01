@@ -1,6 +1,6 @@
 ﻿namespace BackendProyectoFinal.DTOs
 {
-    public class TipoProductoDTO
+    public class MetodoDePagoDTO
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
