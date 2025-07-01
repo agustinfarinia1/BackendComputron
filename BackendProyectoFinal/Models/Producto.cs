@@ -16,12 +16,7 @@ namespace BackendProyectoFinal.Models
         public string Imagen { get; set; }
         public int CategoriaProductoID { get; set; }
         [ForeignKey("CategoriaProductoID")]
-        public virtual CategoriaProducto TipoFactura { get; set; }
+        public virtual CategoriaProducto CategoriaProducto { get; set; }
         public bool Eliminado { get; set; }
-
-        public override string ToString()
-        {
-            return "{ " + ProductoID + " , " + Titulo + " }";
-        }
     }
 }
