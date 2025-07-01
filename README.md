@@ -6,15 +6,15 @@
 - Uso de .Env
 
 ### Funcionalidades del sistema
--Gestion de Categorias de Productos.
--Gestion de Roles de Usuario.
--Gestion de Usuarios(Falta aplicar la encriptacion)
+- Gestion de Categorias de Productos.
+- Gestion de Roles de Usuario.
+- Gestion de Usuarios(Falta aplicar la encriptacion)
 
 ### Proximamente
 
--Aplicar encriptacion en Password
--Creacion de Endpoints faltantes(Producto,Carrito,Pedido)
--Conexion con el Frontend y deploy
+- Aplicar encriptacion en Password
+- Creacion de Endpoints faltantes(Producto,Carrito,Pedido)
+- Conexion con el Frontend y deploy
 
 ### Modelo de dominio
 
