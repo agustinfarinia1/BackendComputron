@@ -1,8 +1,8 @@
+using BackendProyectoFinal.Configurations;
 using BackendProyectoFinal.DTOs;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Services;
-using BackendProyectoFinal.Utils;
 using BackendProyectoFinal.Validators.CategoriaProducto;
 using BackendProyectoFinal.Validators.Domicilio;
 using BackendProyectoFinal.Validators.Rol;
@@ -20,15 +20,21 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
     });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+Env.Load();
+// Config del Encrypter, trae los valores de .Env
+builder.Services.Configure<EncryptConfiguration>(config =>
+{
+    config.PrivateKeyPassword1 = Environment.GetEnvironmentVariable("CLAVE_SECRETA1");
+    config.PrivateKeyPassword2 = Environment.GetEnvironmentVariable("CLAVE_SECRETA2");
+    config.Salt = Environment.GetEnvironmentVariable("SALT");
+});
 
 // SERVICIOS
 builder.Services.AddKeyedScoped<ICommonService<CategoriaProductoDTO, CategoriaProductoInsertDTO, CategoriaProductoUpdateDTO>, CategoriaProductoService>("CategoriaProductoService");
 builder.Services.AddKeyedScoped<ICommonService<RolDTO, RolInsertDTO, RolUpdateDTO>, RolService>("RolService");
 builder.Services.AddKeyedScoped<ICommonService<DomicilioDTO, DomicilioInsertDTO, DomicilioUpdateDTO>, DomicilioService>("DomicilioService");
 builder.Services.AddKeyedScoped<ICommonService<UsuarioDTO, UsuarioInsertDTO, UsuarioUpdateDTO>, UsuarioService>("UsuarioService");
+builder.Services.AddKeyedScoped<EncryptService>("EncryptService");
 
 // REPOSITORY
 builder.Services.AddScoped<IRepository<CategoriaProducto>, CategoriaProductoRepository>();
@@ -51,18 +57,10 @@ builder.Services.AddScoped<IValidator<DomicilioUpdateDTO>, DomicilioUpdateValida
 builder.Services.AddScoped<IValidator<UsuarioInsertDTO>, UsuarioInsertValidator>();
 builder.Services.AddScoped<IValidator<UsuarioUpdateDTO>, UsuarioUpdateValidator>();
 
-// .ENV
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-Env.Load();
-
-
-builder.Services.Configure<EncryptConfiguration>(config =>
-{
-    config.PrivateKeyPassword1 = Environment.GetEnvironmentVariable("CLAVE_SECRETA1");
-    config.PrivateKeyPassword2 = Environment.GetEnvironmentVariable("CLAVE_SECRETA2");
-});
-
-builder.Services.AddSingleton<Encrypt>();
 
 var app = builder.Build();
 

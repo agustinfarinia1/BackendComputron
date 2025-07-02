@@ -16,6 +16,9 @@ namespace BackendProyectoFinal.Repositories
         public async Task<Usuario> GetById(int id)
             => await _context.Usuarios.FindAsync(id);
 
+        public async Task<Usuario> GetByfield(string field)
+        => await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == field);
+
         public async Task Add(Usuario usuario)
               => await _context.Usuarios.AddAsync(usuario);
 

@@ -38,7 +38,6 @@ namespace BackendProyectoFinal.Controllers
         [HttpPost]
         public async Task<ActionResult<UsuarioDTO>> Add(UsuarioInsertDTO usuarioInsertDTO)
         {
-            Console.WriteLine("Usuario " +usuarioInsertDTO);
             // REALIZA VALIDACION DE INSERT DTO
             var validationResult = await _usuarioInsertValidator.ValidateAsync(usuarioInsertDTO);
             // SI LA VALIDACION ES ERRONEA, SE PARA

@@ -15,7 +15,6 @@ namespace BackendProyectoFinal.Controllers
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            Console.WriteLine(id);
             return Ok();
         }
 

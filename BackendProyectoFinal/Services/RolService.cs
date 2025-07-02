@@ -34,6 +34,16 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
+        public async Task<RolDTO> GetByField(string field)
+        {
+            var rol = _repository.Search(r => r.RolID == int.Parse(field)).FirstOrDefault();
+            if (rol != null)
+            {
+                return RolMapper.ConvertRolToDTO(rol);
+            }
+            return null;
+        }
+
         public async Task<RolDTO> Add(RolInsertDTO rolInsertDTO)
         {
             var rol = new Rol()

@@ -35,6 +35,16 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
+        public async Task<CategoriaProductoDTO> GetByField(string field)
+        {
+            var categoria = _repository.Search(u => u.Nombre == field).FirstOrDefault(); ;
+            if (categoria != null)
+            {
+                return CategoriaProductoMapper.ConvertCategoriaProductoToDTO(categoria);
+            }
+            return null;
+        }
+
         public async Task<CategoriaProductoDTO> Add(CategoriaProductoInsertDTO categoriaInsertDTO)
         {
             var categoria = new CategoriaProducto()

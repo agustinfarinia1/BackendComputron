@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace BackendProyectoFinal.Utils
+namespace BackendProyectoFinal.Configurations
 {
     public class DateOnlyJsonConverter : JsonConverter<DateOnly>
     {

@@ -1,4 +1,6 @@
-﻿namespace BackendProyectoFinal.Repositories
+﻿using BackendProyectoFinal.Models;
+
+namespace BackendProyectoFinal.Repositories
 {
     public interface IRepository <TEntity>
     {

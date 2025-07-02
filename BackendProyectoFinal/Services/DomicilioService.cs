@@ -34,6 +34,16 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
+        public async Task<DomicilioDTO> GetByField(string field)
+        {
+            var domicilio = _repository.Search(d => d.DomicilioID == int.Parse(field)).FirstOrDefault();
+            if (domicilio != null)
+            {
+                return DomicilioMapper.ConvertDomicilioToDTO(domicilio);
+            }
+            return null;
+        }
+
         public async Task<DomicilioDTO> Add(DomicilioInsertDTO domicilioInsertDTO)
         {
             var domicilio = DomicilioMapper.ConvertDTOToDomicilio(domicilioInsertDTO);
@@ -45,9 +55,7 @@ namespace BackendProyectoFinal.Services
 
         public async Task<DomicilioDTO> Update(DomicilioUpdateDTO domicilioUpdateDTO)
         {
-            Console.WriteLine("InsertDTO" +domicilioUpdateDTO);
             var domicilio = await _repository.GetById(domicilioUpdateDTO.Id);
-            Console.WriteLine("Model" +domicilioUpdateDTO);
             if (domicilio != null)
             {
                 domicilio.Nombre = domicilioUpdateDTO.Nombre;

@@ -1,17 +1,27 @@
-﻿using System.Security.Cryptography;
+﻿using BackendProyectoFinal.Configurations;
+using Microsoft.Extensions.Options;
+using System.Security.Cryptography;
 using System.Text;
 
-namespace BackendProyectoFinal.Utils
+namespace BackendProyectoFinal.Services
 {
-    public class Encrypt
+    public class EncryptService
     {
-        public byte[] Key {  get;}
-        public byte[] IV { get; }
+        private byte[] Key {  get;}
+        private byte[] IV { get; }
 
-        public Encrypt()
+        public EncryptService(IOptions<EncryptConfiguration> config)
         {
-            Key = Encoding.UTF8.GetBytes("asdasdasdsqadasdada");
-            IV = Encoding.UTF8.GetBytes("qweqweqweqwewqe");
+            var fraseFinal = config.Value.PrivateKeyPassword1 + config.Value.PrivateKeyPassword2;
+
+            // Salt configurado desde .Env
+            var salt = Encoding.UTF8.GetBytes(config.Value.Salt);
+
+            // Usamos PBKDF2 para derivar 32 bytes (AES-256) + 16 bytes (IV)
+            var keyDeriver = new Rfc2898DeriveBytes(fraseFinal, salt, 100_000, HashAlgorithmName.SHA256);
+
+            Key = keyDeriver.GetBytes(32); // AES-256
+            IV = keyDeriver.GetBytes(16);  // IV (AES usa bloque de 16 bytes)
         }
 
         public string EncryptData(string plainText) 

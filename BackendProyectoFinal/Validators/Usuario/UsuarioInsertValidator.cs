@@ -9,7 +9,6 @@ namespace BackendProyectoFinal.Validators.Usuario
         {
             // CHEQUEAR TEMA FECHA NACIMIENTO
             var fechaMinima = DateOnly.FromDateTime(DateTime.Today.AddYears(-18));
-            Console.WriteLine("VALIDATOR USER " + fechaMinima);
             RuleFor(x => x.Nombre).NotEmpty().WithMessage("El nombre es obligatorio");
             RuleFor(x => x.Nombre).Length(2,20).WithMessage("El nombre debe medir de 2 a 20 caracteres");
             RuleFor(x => x.Password).NotEmpty().WithMessage("La Password es obligatorias");

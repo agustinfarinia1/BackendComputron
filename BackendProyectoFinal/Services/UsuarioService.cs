@@ -9,10 +9,13 @@ namespace BackendProyectoFinal.Services
     {
         private IRepository<Usuario> _repository;
         public List<string> Errors { get; }
+        private readonly EncryptService _encryptService;
         public UsuarioService(
-            IRepository<Usuario> repository)
+            IRepository<Usuario> repository,
+            [FromKeyedServices("EncryptService")] EncryptService encryptService)
         {
             _repository = repository;
+            _encryptService = encryptService;
             Errors = new List<string>();
         }
 
@@ -35,8 +38,20 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
+        public async Task<UsuarioDTO> GetByField(string field)
+        {
+            var usuario = _repository.Search(u => u.Email == field).FirstOrDefault(); ;
+            if (usuario != null)
+            {
+                return UsuarioMapper.ConvertUsuarioToDTO(usuario);
+            }
+            return null;
+        }
+
         public async Task<UsuarioDTO> Add(UsuarioInsertDTO usuarioInsertDTO)
         {
+            var claveEncriptada = _encryptService.EncryptData(usuarioInsertDTO.Password);
+            usuarioInsertDTO.Password = claveEncriptada;
             var usuario = UsuarioMapper.ConvertDTOToUsuario(usuarioInsertDTO);
             await _repository.Add(usuario);
             await _repository.Save();
@@ -50,7 +65,8 @@ namespace BackendProyectoFinal.Services
             if (usuario != null)
             {
                 usuario.Nombre = usuarioUpdateDTO.Nombre;
-                usuario.Password = usuarioUpdateDTO.Password;
+                var claveEncriptada = _encryptService.EncryptData(usuarioUpdateDTO.Password);
+                usuario.Password = claveEncriptada;
                 usuario.Apellido = usuarioUpdateDTO.Apellido;
                 usuario.FechaNacimiento = usuarioUpdateDTO.FechaNacimiento;
                 usuario.Eliminado = usuarioUpdateDTO.Eliminado;
