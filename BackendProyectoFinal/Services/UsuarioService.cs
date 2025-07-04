@@ -2,6 +2,7 @@
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Utils.Mappers;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BackendProyectoFinal.Services
 {
@@ -64,12 +65,7 @@ namespace BackendProyectoFinal.Services
             var usuario = await _repository.GetById(usuarioUpdateDTO.Id);
             if (usuario != null)
             {
-                usuario.Nombre = usuarioUpdateDTO.Nombre;
-                var claveEncriptada = _encryptService.EncryptData(usuarioUpdateDTO.Password);
-                usuario.Password = claveEncriptada;
-                usuario.Apellido = usuarioUpdateDTO.Apellido;
-                usuario.FechaNacimiento = usuarioUpdateDTO.FechaNacimiento;
-                usuario.Eliminado = usuarioUpdateDTO.Eliminado;
+                UsuarioMapper.ActualizarUsuario(usuario,usuarioUpdateDTO);
 
                 _repository.Update(usuario);
                 await _repository.Save();
@@ -84,8 +80,8 @@ namespace BackendProyectoFinal.Services
             var usuario = await _repository.GetById(id);
             if (usuario != null)
             {
-                var usuarioDTO = UsuarioMapper.ConvertUsuarioToDTO(usuario);
                 usuario.Eliminado = true;
+                var usuarioDTO = UsuarioMapper.ConvertUsuarioToDTO(usuario);
 
                 _repository.Delete(usuario);
                 await _repository.Save();
@@ -99,9 +95,8 @@ namespace BackendProyectoFinal.Services
             if (_repository.Search(u => u.Email == usuarioDTO.Email).Count() > 0)
             {
                 Errors.Add("No puede existir un usuario con un email ya existente");
-                return false;
             }
-            return true;
+            return Errors.IsNullOrEmpty() == true ? true : false;
         }
 
         public bool Validate(UsuarioUpdateDTO usuarioDTO)
@@ -111,9 +106,8 @@ namespace BackendProyectoFinal.Services
                 && usuarioDTO.Id != u.UsuarioID).Count() > 0)
             {
                 Errors.Add("No puede existir un usuario con un email ya existente");
-                return false;
             }
-            return true;
+            return Errors.IsNullOrEmpty() == true ? true : false;
         }
     }
 }

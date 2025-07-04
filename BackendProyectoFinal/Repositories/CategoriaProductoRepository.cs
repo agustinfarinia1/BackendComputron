@@ -13,8 +13,12 @@ namespace BackendProyectoFinal.Repositories
         public async Task<IEnumerable<CategoriaProducto>> Get()
             => await _context.CategoriaProductos.ToListAsync();
 
-        public async Task<CategoriaProducto> GetById(int id)
+        public async Task<CategoriaProducto?> GetById(int id)
             => await _context.CategoriaProductos.FindAsync(id);
+
+        public async Task<CategoriaProducto?> GetByField(string field)
+            => await _context.CategoriaProductos
+                .FirstOrDefaultAsync(c => c.Nombre == field);
 
         public async Task Add(CategoriaProducto categoria)
               => await _context.CategoriaProductos.AddAsync(categoria);

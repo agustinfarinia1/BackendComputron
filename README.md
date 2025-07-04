@@ -1,21 +1,21 @@
 # CompuTron - Backend
-- Backend de productos de informatica.
+- Backend de un Ecommerce de productos de informatica.
 - Este backend fue realizado con ASP.NET Core Web API.
 - Persistencia en Base de Relacional (SQL).
 - Implementacion de Fluent Validations.
 - Uso de .Env
+- Cifrado AES 
 
 ### Funcionalidades del sistema
-- Gestion de Categorias de Productos.
-- Gestion de Roles de Usuario.
-- Gestion de Usuarios(Falta aplicar la encriptacion)
+- Gestion de Productos(Categorias,Marcas).
+- Gestion de Usuarios.
+- Gestion de Domicilios(Usuario y proximamente para pedidos).
 
 ### Proximamente
 
-- Aplicar encriptacion en Password
-- Creacion de Endpoints faltantes(Producto,Carrito,Pedido)
+- Creacion de Endpoints faltantes(Carrito,Pedido,MetodoPago)
 - Conexion con el Frontend y deploy
 
-### Modelo de dominio
+### Modelo de dominio (aproximado)
 
 ![modelo de dominio](https://github.com/agustinfarinia1/compuTron/blob/main/src/assets/modelo-dominio.png)

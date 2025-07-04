@@ -3,7 +3,7 @@ using BackendProyectoFinal.Models;
 
 namespace BackendProyectoFinal.Utils.Mappers
 {
-    public class UsuarioMapper
+    public static class UsuarioMapper
     {
         public static Usuario ConvertDTOToUsuario(UsuarioInsertDTO usuarioDTO)
         {
@@ -37,6 +37,35 @@ namespace BackendProyectoFinal.Utils.Mappers
                 Eliminado = usuario.Eliminado
             };
             return usuarioDTO;
+        }
+
+        public static void ActualizarUsuario(Usuario usuario, UsuarioUpdateDTO usuarioDTO)
+        {
+            if (!string.IsNullOrWhiteSpace(usuarioDTO.Nombre))
+                usuario.Nombre = usuarioDTO.Nombre;
+
+            if (!string.IsNullOrWhiteSpace(usuarioDTO.Password))
+                usuario.Password = usuarioDTO.Password;
+
+            if (!string.IsNullOrWhiteSpace(usuarioDTO.Apellido))
+                usuario.Apellido = usuarioDTO.Apellido;
+
+            if (!string.IsNullOrWhiteSpace(usuarioDTO.Email))
+                usuario.Email = usuarioDTO.Email;
+
+            if (usuarioDTO.FechaNacimiento > DateOnly.MinValue)
+                usuario.FechaNacimiento = usuarioDTO.FechaNacimiento;
+
+            if (usuarioDTO.RolID > 0)
+                usuario.RolID = usuarioDTO.RolID;
+
+            if (usuarioDTO.DomicilioID > 0)
+                usuario.DomicilioID = usuarioDTO.DomicilioID;
+
+            if (usuarioDTO.Eliminado.HasValue)
+            {
+                usuario.Eliminado = (bool)usuarioDTO.Eliminado;
+            }
         }
     }
 }

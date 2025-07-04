@@ -5,6 +5,8 @@ using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Services;
 using BackendProyectoFinal.Validators.CategoriaProducto;
 using BackendProyectoFinal.Validators.Domicilio;
+using BackendProyectoFinal.Validators.Marca;
+using BackendProyectoFinal.Validators.Producto;
 using BackendProyectoFinal.Validators.Rol;
 using BackendProyectoFinal.Validators.Usuario;
 using DotNetEnv;
@@ -34,6 +36,8 @@ builder.Services.AddKeyedScoped<ICommonService<CategoriaProductoDTO, CategoriaPr
 builder.Services.AddKeyedScoped<ICommonService<RolDTO, RolInsertDTO, RolUpdateDTO>, RolService>("RolService");
 builder.Services.AddKeyedScoped<ICommonService<DomicilioDTO, DomicilioInsertDTO, DomicilioUpdateDTO>, DomicilioService>("DomicilioService");
 builder.Services.AddKeyedScoped<ICommonService<UsuarioDTO, UsuarioInsertDTO, UsuarioUpdateDTO>, UsuarioService>("UsuarioService");
+builder.Services.AddKeyedScoped<ICommonService<MarcaDTO, MarcaInsertDTO, MarcaUpdateDTO>, MarcaService>("MarcaService");
+builder.Services.AddKeyedScoped<ICommonService<ProductoDTO, ProductoInsertDTO, ProductoUpdateDTO>, ProductoService>("ProductoService");
 builder.Services.AddKeyedScoped<EncryptService>("EncryptService");
 
 // REPOSITORY
@@ -41,6 +45,8 @@ builder.Services.AddScoped<IRepository<CategoriaProducto>, CategoriaProductoRepo
 builder.Services.AddScoped<IRepository<Rol>, RolRepository>();
 builder.Services.AddScoped<IRepository<Domicilio>, DomicilioRepository>();
 builder.Services.AddScoped<IRepository<Usuario>, UsuarioRepository>();
+builder.Services.AddScoped<IRepository<Marca>, MarcaRepository>();
+builder.Services.AddScoped<IRepository<Producto>, ProductoRepository>();
 
 // ENTITY FRAMEWORK
 builder.Services.AddDbContext<StoreContext>(options =>
@@ -56,6 +62,10 @@ builder.Services.AddScoped<IValidator<DomicilioInsertDTO>, DomicilioInsertValida
 builder.Services.AddScoped<IValidator<DomicilioUpdateDTO>, DomicilioUpdateValidator>();
 builder.Services.AddScoped<IValidator<UsuarioInsertDTO>, UsuarioInsertValidator>();
 builder.Services.AddScoped<IValidator<UsuarioUpdateDTO>, UsuarioUpdateValidator>();
+builder.Services.AddScoped<IValidator<MarcaInsertDTO>, MarcaInsertValidator>();
+builder.Services.AddScoped<IValidator<MarcaUpdateDTO>, MarcaUpdateValidator>();
+builder.Services.AddScoped<IValidator<ProductoInsertDTO>, ProductoInsertValidator>();
+builder.Services.AddScoped<IValidator<ProductoUpdateDTO>, ProductoUpdateValidator>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

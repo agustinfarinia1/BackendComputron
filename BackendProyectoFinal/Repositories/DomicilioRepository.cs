@@ -13,8 +13,14 @@ namespace BackendProyectoFinal.Repositories
         public async Task<IEnumerable<Domicilio>> Get()
             => await _context.Domicilios.ToListAsync();
 
-        public async Task<Domicilio> GetById(int id)
+        public async Task<Domicilio?> GetById(int id)
             => await _context.Domicilios.FindAsync(id);
+
+        // TODO - Esto no es del todo correcto porque Domicilio tendria que tener tambien numero para hacer una mejor busqueda
+        // podria hacer que lo mande en un string separado por un espacio y subdividir el string(para que siga con el mismo cuerpo general)
+        public async Task<Domicilio?> GetByField(string field)
+            => await _context.Domicilios
+                .FirstOrDefaultAsync(d => d.Nombre == field);
 
         public async Task Add(Domicilio domicilio)
               => await _context.Domicilios.AddAsync(domicilio);

@@ -1,7 +1,8 @@
 ﻿using BackendProyectoFinal.DTOs;
-using BackendProyectoFinal.Utils.Mappers;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
+using BackendProyectoFinal.Utils.Mappers;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BackendProyectoFinal.Services
 {
@@ -90,9 +91,8 @@ namespace BackendProyectoFinal.Services
             if (_repository.Search(r => r.Nombre.ToUpper() == rolDTO.Nombre.ToUpper()).Count() > 0)
             {
                 Errors.Add("No puede existir un rol con un nombre ya existente");
-                return false;
             }
-            return true;
+            return Errors.IsNullOrEmpty() == true ? true : false;
         }
 
         public bool Validate(RolUpdateDTO rolDTO)
@@ -102,9 +102,8 @@ namespace BackendProyectoFinal.Services
                 && rolDTO.Id != r.RolID).Count() > 0)
             {
                 Errors.Add("No puede existir un rol con un nombre ya existente");
-                return false;
             }
-            return true;
+            return Errors.IsNullOrEmpty() == true ? true : false;
         }
     }
 }

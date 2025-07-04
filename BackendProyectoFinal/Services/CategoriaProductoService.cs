@@ -1,7 +1,8 @@
 ﻿using BackendProyectoFinal.DTOs;
-using BackendProyectoFinal.Utils.Mappers;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
+using BackendProyectoFinal.Utils.Mappers;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BackendProyectoFinal.Services
 {
@@ -91,9 +92,8 @@ namespace BackendProyectoFinal.Services
             if (_repository.Search(c => c.Nombre.ToUpper() == categoriaDTO.Nombre.ToUpper()).Count() > 0)
             {
                 Errors.Add("No puede existir una categoria con un nombre ya existente");
-                return false;
             }
-            return true;
+            return Errors.IsNullOrEmpty() == true ? true : false;
         }
 
         public bool Validate(CategoriaProductoUpdateDTO categoriaDTO)
@@ -103,9 +103,8 @@ namespace BackendProyectoFinal.Services
                 && categoriaDTO.Id != c.CategoriaProductoID).Count() > 0)
             {
                 Errors.Add("No puede existir una categoria con un nombre ya existente");
-                return false;
             }
-            return true;
+            return Errors.IsNullOrEmpty() == true ? true : false;
         }
     }
 }

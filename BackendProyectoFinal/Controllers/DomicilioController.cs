@@ -30,8 +30,8 @@ namespace BackendProyectoFinal.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<DomicilioDTO>> GetById(int id)
         {
-            var categoria = await _domicilioService.GetById(id);
-            return categoria == null ? NotFound() : Ok(categoria);
+            var domicilio = await _domicilioService.GetById(id);
+            return domicilio == null ? NotFound() : Ok(domicilio);
         }
 
         [HttpPost]

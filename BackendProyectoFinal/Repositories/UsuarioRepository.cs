@@ -11,13 +11,16 @@ namespace BackendProyectoFinal.Repositories
             _context = context;
         }
         public async Task<IEnumerable<Usuario>> Get()
-            => await _context.Usuarios.ToListAsync();
+            => await _context.Usuarios
+                .Where(u => u.Eliminado == false).ToListAsync();
 
-        public async Task<Usuario> GetById(int id)
-            => await _context.Usuarios.FindAsync(id);
+        public async Task<Usuario?> GetById(int id)
+            => await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.UsuarioID == id && u.Eliminado == false);
 
-        public async Task<Usuario> GetByfield(string field)
-        => await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == field);
+        public async Task<Usuario?> GetByField(string field)
+            => await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Email == field && u.Eliminado == false);
 
         public async Task Add(Usuario usuario)
               => await _context.Usuarios.AddAsync(usuario);

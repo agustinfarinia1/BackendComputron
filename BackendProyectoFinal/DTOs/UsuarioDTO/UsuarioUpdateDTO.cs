@@ -10,6 +10,6 @@
         public DateOnly FechaNacimiento { get; set; }
         public int RolID { get; set; }
         public int DomicilioID { get; set; }
-        public bool Eliminado { get; set; }
+        public bool? Eliminado { get; set; }
     }
 }

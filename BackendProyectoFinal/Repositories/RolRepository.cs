@@ -14,8 +14,12 @@ namespace BackendProyectoFinal.Repositories
         public async Task<IEnumerable<Rol>> Get()
             => await _context.Roles.ToListAsync();
 
-        public async Task<Rol> GetById(int id)
+        public async Task<Rol?> GetById(int id)
             => await _context.Roles.FindAsync(id);
+
+        public async Task<Rol?> GetByField(string field)
+            => await _context.Roles
+                .FirstOrDefaultAsync(r => r.Nombre == field);
 
         public async Task Add(Rol rol)
               => await _context.Roles.AddAsync(rol);

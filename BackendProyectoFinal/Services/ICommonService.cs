@@ -1,6 +1,4 @@
-﻿using BackendProyectoFinal.DTOs;
-
-namespace BackendProyectoFinal.Services
+﻿namespace BackendProyectoFinal.Services
 {
     public interface ICommonService<T, TI, TU>
     {
