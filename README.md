@@ -16,6 +16,6 @@
 - Creacion de Endpoints faltantes(MetodoPago,Factura)
 - Conexion con el Frontend y deploy
 
-### Modelo de dominio (aproximado)
+### Modelo de Base de Datos(Actual)
 
-![modelo de dominio](https://github.com/agustinfarinia1/compuTron/blob/main/src/assets/modelo-dominio.png)
+![modelo de Base de Datos](https://github.com/agustinfarinia1/BackendProyectoFinal/blob/main/BackendProyectoFinal/Schema/DBDiagram.png)
