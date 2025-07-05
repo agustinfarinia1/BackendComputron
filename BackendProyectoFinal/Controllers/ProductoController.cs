@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs;
+﻿using BackendProyectoFinal.DTOs.ProductoDTO;
 using BackendProyectoFinal.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;

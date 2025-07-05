@@ -1,4 +1,4 @@
-﻿namespace BackendProyectoFinal.DTOs
+﻿namespace BackendProyectoFinal.DTOs.MarcaDTO
 {
     public class MarcaInsertDTO
     {

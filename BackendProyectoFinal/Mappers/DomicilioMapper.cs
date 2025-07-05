@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs;
+﻿using BackendProyectoFinal.DTOs.DomicilioDTO;
 using BackendProyectoFinal.Models;
 
 namespace BackendProyectoFinal.Utils.Mappers

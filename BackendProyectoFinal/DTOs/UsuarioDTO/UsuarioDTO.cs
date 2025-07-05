@@ -1,7 +1,4 @@
-﻿using BackendProyectoFinal.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BackendProyectoFinal.DTOs
+﻿namespace BackendProyectoFinal.DTOs.UsuarioDTO
 {
     public class UsuarioDTO
     {

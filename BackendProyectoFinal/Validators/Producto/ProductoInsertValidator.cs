@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs;
+﻿using BackendProyectoFinal.DTOs.ProductoDTO;
 using FluentValidation;
 
 namespace BackendProyectoFinal.Validators.Producto

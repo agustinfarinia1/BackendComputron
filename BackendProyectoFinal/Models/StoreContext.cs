@@ -13,6 +13,9 @@ namespace BackendProyectoFinal.Models
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Producto> Productos { get; set; }
+        public DbSet<Carrito> Carritos { get; set; }
+        public DbSet<EstadoPedido> EstadosDePedido { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
         /*
         public DbSet<TipoFactura> TipoFacturas { get; set; }
         public DbSet<Factura> Facturas { get; set; }

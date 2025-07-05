@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs;
+﻿using BackendProyectoFinal.DTOs.ProductoDTO;
 using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
@@ -26,7 +26,7 @@ namespace BackendProyectoFinal.Services
                     ProductoMapper.ConvertProductoToDTO(p));
         }
 
-        public async Task<ProductoDTO> GetById(int id)
+        public async Task<ProductoDTO?> GetById(int id)
         {
             var producto = await _repository.GetById(id);
             if (producto != null)
@@ -37,7 +37,7 @@ namespace BackendProyectoFinal.Services
         }
 
         // Por ahora la busqueda es por titulo, podria ser por CategoriaProducto
-        public async Task<ProductoDTO> GetByField(string field)
+        public async Task<ProductoDTO?> GetByField(string field)
         {
             var productos = _repository.Search(p => p.Titulo == field).FirstOrDefault(); ;
             if (productos != null)

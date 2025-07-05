@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs;
+﻿using BackendProyectoFinal.DTOs.MarcaDTO;
 using FluentValidation;
 
 namespace BackendProyectoFinal.Validators.Marca

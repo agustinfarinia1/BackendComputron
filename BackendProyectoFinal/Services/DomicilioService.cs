@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs;
+﻿using BackendProyectoFinal.DTOs.DomicilioDTO;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Utils.Mappers;
@@ -24,7 +24,7 @@ namespace BackendProyectoFinal.Services
             );
         }
 
-        public async Task<DomicilioDTO> GetById(int id)
+        public async Task<DomicilioDTO?> GetById(int id)
         {
             var domicilio = await _repository.GetById(id);
             if (domicilio != null)
@@ -34,7 +34,7 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
-        public async Task<DomicilioDTO> GetByField(string field)
+        public async Task<DomicilioDTO?> GetByField(string field)
         {
             var domicilio = _repository.Search(d => d.DomicilioID == int.Parse(field)).FirstOrDefault();
             if (domicilio != null)

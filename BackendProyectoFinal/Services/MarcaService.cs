@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs;
+﻿using BackendProyectoFinal.DTOs.MarcaDTO;
 using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
@@ -25,7 +25,7 @@ namespace BackendProyectoFinal.Services
             );
         }
 
-        public async Task<MarcaDTO> GetById(int id)
+        public async Task<MarcaDTO?> GetById(int id)
         {
             var marca = await _repository.GetById(id);
             if (marca != null)
@@ -35,7 +35,7 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
-        public async Task<MarcaDTO> GetByField(string field)
+        public async Task<MarcaDTO?> GetByField(string field)
         {
             var marca = _repository.Search(r => r.Nombre.ToUpper() == field.ToUpper()).FirstOrDefault();
             if (marca != null)

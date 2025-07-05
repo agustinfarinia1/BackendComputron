@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs;
+﻿using BackendProyectoFinal.DTOs.UsuarioDTO;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Utils.Mappers;
@@ -29,7 +29,7 @@ namespace BackendProyectoFinal.Services
             );
         }
 
-        public async Task<UsuarioDTO> GetById(int id)
+        public async Task<UsuarioDTO?> GetById(int id)
         {
             var usuario = await _repository.GetById(id);
             if (usuario != null)
@@ -39,7 +39,7 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
-        public async Task<UsuarioDTO> GetByField(string field)
+        public async Task<UsuarioDTO?> GetByField(string field)
         {
             var usuario = _repository.Search(u => u.Email == field).FirstOrDefault(); ;
             if (usuario != null)

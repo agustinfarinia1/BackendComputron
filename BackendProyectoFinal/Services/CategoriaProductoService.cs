@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs;
+﻿using BackendProyectoFinal.DTOs.CategoriaProductoDTO;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Utils.Mappers;
@@ -26,7 +26,7 @@ namespace BackendProyectoFinal.Services
             );
         }
         
-        public async Task<CategoriaProductoDTO> GetById(int id)
+        public async Task<CategoriaProductoDTO?> GetById(int id)
         {
             var categoria = await _repository.GetById(id);
             if (categoria != null)
@@ -36,7 +36,7 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
-        public async Task<CategoriaProductoDTO> GetByField(string field)
+        public async Task<CategoriaProductoDTO?> GetByField(string field)
         {
             var categoria = _repository.Search(u => u.Nombre == field).FirstOrDefault(); ;
             if (categoria != null)

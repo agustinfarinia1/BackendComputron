@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs;
+﻿using BackendProyectoFinal.DTOs.RolDTO;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Utils.Mappers;
@@ -25,7 +25,7 @@ namespace BackendProyectoFinal.Services
             );
         }
 
-        public async Task<RolDTO> GetById(int id)
+        public async Task<RolDTO?> GetById(int id)
         {
             var rol = await _repository.GetById(id);
             if (rol != null)
@@ -35,7 +35,7 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
-        public async Task<RolDTO> GetByField(string field)
+        public async Task<RolDTO?> GetByField(string field)
         {
             var rol = _repository.Search(r => r.RolID == int.Parse(field)).FirstOrDefault();
             if (rol != null)
