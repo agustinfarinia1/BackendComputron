@@ -10,11 +10,10 @@
 - Gestion de Productos(Categorias,Marcas).
 - Gestion de Usuarios.
 - Gestion de Pedidos y Carrito por usuario.
-- Gestion de Domicilios(Usuario y proximamente para pedidos).
 
 ### Proximamente
 
-- Creacion de Endpoints faltantes(Carrito,Pedido,MetodoPago)
+- Creacion de Endpoints faltantes(MetodoPago,Factura)
 - Conexion con el Frontend y deploy
 
 ### Modelo de dominio (aproximado)
