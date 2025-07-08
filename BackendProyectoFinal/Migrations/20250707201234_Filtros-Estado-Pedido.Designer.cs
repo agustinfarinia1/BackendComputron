@@ -4,6 +4,7 @@ using BackendProyectoFinal.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendProyectoFinal.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20250707201234_Filtros-Estado-Pedido")]
+    partial class FiltrosEstadoPedido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,6 +94,12 @@ namespace BackendProyectoFinal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EstadoPedidoID"));
 
+                    b.Property<bool>("EsPrimero")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("EsUltimo")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("EstadoSiguienteID")
                         .HasColumnType("int");
 
@@ -100,7 +109,7 @@ namespace BackendProyectoFinal.Migrations
 
                     b.HasKey("EstadoPedidoID");
 
-                    b.ToTable("EstadosDePedidos");
+                    b.ToTable("EstadosDePedido");
                 });
 
             modelBuilder.Entity("BackendProyectoFinal.Models.ItemCarrito", b =>

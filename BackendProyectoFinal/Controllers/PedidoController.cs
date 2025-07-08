@@ -1,4 +1,5 @@
-﻿using BackendProyectoFinal.DTOs.PedidoDTO;
+﻿using BackendProyectoFinal.DTOs.EstadoPedidoDTO;
+using BackendProyectoFinal.DTOs.PedidoDTO;
 using BackendProyectoFinal.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;

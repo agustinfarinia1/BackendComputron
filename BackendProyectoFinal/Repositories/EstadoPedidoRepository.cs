@@ -11,27 +11,27 @@ namespace BackendProyectoFinal.Repositories
             _context = context;
         }
         public async Task<IEnumerable<EstadoPedido>> Get()
-            => await _context.EstadosDePedido.ToListAsync();
+            => await _context.EstadosDePedidos.ToListAsync();
 
         public async Task<EstadoPedido?> GetById(int id)
-            => await _context.EstadosDePedido.FindAsync(id);
+            => await _context.EstadosDePedidos.FindAsync(id);
 
         public async Task<EstadoPedido?> GetByField(string field)
-            => await _context.EstadosDePedido
+            => await _context.EstadosDePedidos
                 .FirstOrDefaultAsync(e => e.Nombre == field);
 
         public async Task Add(EstadoPedido estado)
-              => await _context.EstadosDePedido.AddAsync(estado);
+              => await _context.EstadosDePedidos.AddAsync(estado);
 
         public void Update(EstadoPedido estado)
         {
-            _context.EstadosDePedido.Attach(estado);
-            _context.EstadosDePedido.Entry(estado).State = EntityState.Modified;
+            _context.EstadosDePedidos.Attach(estado);
+            _context.EstadosDePedidos.Entry(estado).State = EntityState.Modified;
             // AVISA A ENTITY FRAMEWORK QUE FUE MODIFICADO, PARA PODER REALIZAR EL SAVE
         }
 
         public void Delete(EstadoPedido estado)
-            => _context.EstadosDePedido.Remove(estado);
+            => _context.EstadosDePedidos.Remove(estado);
 
         public async Task Save()
         {
@@ -39,6 +39,6 @@ namespace BackendProyectoFinal.Repositories
         }
 
         public IEnumerable<EstadoPedido> Search(Func<EstadoPedido, bool> filter)
-            => _context.EstadosDePedido.Where(filter).ToList();
+            => _context.EstadosDePedidos.Where(filter).ToList();
     }
 }

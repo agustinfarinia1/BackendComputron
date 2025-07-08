@@ -87,3 +87,6 @@ Inner Join Marcas as M
 On P.MarcaID = M.MarcaID
 Inner Join CategoriaProductos as C
 On P.CategoriaProductoID = C.CategoriaProductoID;
+
+select * from EstadosDePedidos
+Order by EstadoSiguienteID;

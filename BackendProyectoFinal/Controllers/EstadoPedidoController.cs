@@ -10,12 +10,12 @@ namespace BackendProyectoFinal.Controllers
     [ApiController]
     public class EstadoPedidoController : ControllerBase
     {
-        private ICommonService<EstadoPedidoDTO, EstadoPedidoInsertDTO, EstadoPedidoUpdateDTO> _estadoPedidoService;
+        private IEstadoPedidoService _estadoPedidoService;
         private IValidator<EstadoPedidoInsertDTO> _estadoPedidoInsertValidator;
         private IValidator<EstadoPedidoUpdateDTO> _estadoPedidoUpdateValidator;
 
         public EstadoPedidoController(
-            [FromKeyedServices("EstadoPedidoService")] ICommonService<EstadoPedidoDTO, EstadoPedidoInsertDTO, EstadoPedidoUpdateDTO> estadoPedidoService,
+            [FromKeyedServices("EstadoPedidoService")] IEstadoPedidoService estadoPedidoService,
             IValidator<EstadoPedidoInsertDTO> estadoPedidoInsertValidator,
             IValidator<EstadoPedidoUpdateDTO> estadoPedidoUpdateValidator)
         {
@@ -38,7 +38,7 @@ namespace BackendProyectoFinal.Controllers
         [HttpPost]
         public async Task<ActionResult<EstadoPedidoDTO>> Add(EstadoPedidoInsertDTO estadoPedidoInsertDTO)
         {
-            // REALIZA VALIDACION DE INSERT DTO (QUE NOMBRE NO ESTE VACIO)
+            // REALIZA VALIDACION DE INSERT DTO
             var validationResult = await _estadoPedidoInsertValidator.ValidateAsync(estadoPedidoInsertDTO);
             // SI LA VALIDACION ES ERRONEA, SE PARA
             // Y DEVUELVE LOS ERRRORES LISTADOS

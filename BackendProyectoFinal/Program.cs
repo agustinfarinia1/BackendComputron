@@ -53,7 +53,7 @@ builder.Services.AddKeyedScoped<ICommonService<UsuarioDTO, UsuarioInsertDTO, Usu
 builder.Services.AddKeyedScoped<ICommonService<MarcaDTO, MarcaInsertDTO, MarcaUpdateDTO>, MarcaService>("MarcaService");
 builder.Services.AddKeyedScoped<ICommonService<ProductoDTO, ProductoInsertDTO, ProductoUpdateDTO>, ProductoService>("ProductoService");
 builder.Services.AddKeyedScoped<ICommonService<CarritoDTO, CarritoInsertDTO, CarritoUpdateDTO>, CarritoService>("CarritoService");
-builder.Services.AddKeyedScoped<ICommonService<EstadoPedidoDTO, EstadoPedidoInsertDTO, EstadoPedidoUpdateDTO>, EstadoPedidoService>("EstadoPedidoService");
+builder.Services.AddKeyedScoped<IEstadoPedidoService, EstadoPedidoService>("EstadoPedidoService");
 builder.Services.AddKeyedScoped<ICommonService<PedidoDTO, PedidoInsertDTO, PedidoUpdateDTO>, PedidoService>("PedidoService");
 builder.Services.AddKeyedScoped<EncryptService>("EncryptService");
 

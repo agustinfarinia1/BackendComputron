@@ -1,17 +1,21 @@
-﻿using BackendProyectoFinal.DTOs.PedidoDTO;
+﻿using Microsoft.IdentityModel.Tokens;
+using BackendProyectoFinal.DTOs.PedidoDTO;
 using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
-using Microsoft.IdentityModel.Tokens;
 
 namespace BackendProyectoFinal.Services
 {
     public class PedidoService : ICommonService<PedidoDTO, PedidoInsertDTO, PedidoUpdateDTO>
     {
+        private IEstadoPedidoService _estadoPedidoService;
         private IRepository<Pedido> _repository;
         public List<string> Errors { get; }
-        public PedidoService(IRepository<Pedido> repository)
+        public PedidoService(
+            [FromKeyedServices("EstadoPedidoService")] IEstadoPedidoService estadoPedidoService,
+            IRepository<Pedido> repository)
         {
+            _estadoPedidoService = estadoPedidoService;
             _repository = repository;
             Errors = new List<string>();
         }
@@ -46,6 +50,7 @@ namespace BackendProyectoFinal.Services
 
         public async Task<PedidoDTO> Add(PedidoInsertDTO pedidoInsertDTO)
         {
+            var estadoPedidoInicial = _estadoPedidoService.GetPrimero();
             var pedido = PedidoMapper.ConvertDTOToModel(pedidoInsertDTO);
             await _repository.Add(pedido);
             await _repository.Save();
@@ -53,7 +58,7 @@ namespace BackendProyectoFinal.Services
             return PedidoMapper.ConvertPedidoToDTO(pedido);
         }
 
-        public async Task<PedidoDTO> Update(PedidoUpdateDTO pedidoUpdateDTO)
+        public async Task<PedidoDTO?> Update(PedidoUpdateDTO pedidoUpdateDTO)
         {
             var pedido = await _repository.GetById(pedidoUpdateDTO.Id);
             if (pedido != null)
@@ -68,7 +73,7 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
-        public async Task<PedidoDTO> Delete(int id)
+        public async Task<PedidoDTO?> Delete(int id)
         {
             var pedido = await _repository.GetById(id);
             if (pedido != null)
