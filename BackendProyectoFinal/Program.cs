@@ -7,25 +7,26 @@ using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Services;
 // DTOs
-using BackendProyectoFinal.DTOs.RolDTO;
-using BackendProyectoFinal.DTOs.DomicilioDTO;
-using BackendProyectoFinal.DTOs.UsuarioDTO;
-using BackendProyectoFinal.DTOs.CategoriaProductoDTO;
-using BackendProyectoFinal.DTOs.MarcaDTO;
-using BackendProyectoFinal.DTOs.ProductoDTO;
-using BackendProyectoFinal.DTOs.CarritoDTO;
-using BackendProyectoFinal.DTOs.EstadoPedidoDTO;
-using BackendProyectoFinal.DTOs.PedidoDTO;
+using BackendProyectoFinal.DTOs.RoleDTO;
+using BackendProyectoFinal.DTOs.AddressDTO;
+using BackendProyectoFinal.DTOs.UserDTO;
+using BackendProyectoFinal.DTOs.CategoryDTO;
+using BackendProyectoFinal.DTOs.BrandDTO;
+using BackendProyectoFinal.DTOs.ProductDTO;
+using BackendProyectoFinal.DTOs.CartDTO;
+using BackendProyectoFinal.DTOs.ItemCartDTO;
+using BackendProyectoFinal.DTOs.OrderStatusDTO;
+using BackendProyectoFinal.DTOs.OrderDTO;
+using BackendProyectoFinal.DTOs.ItemOrderDTO;
 //Validators
-using BackendProyectoFinal.Validators.Domicilio;
-using BackendProyectoFinal.Validators.Rol;
-using BackendProyectoFinal.Validators.Usuario;
-using BackendProyectoFinal.Validators.CategoriaProducto;
-using BackendProyectoFinal.Validators.Marca;
-using BackendProyectoFinal.Validators.Producto;
-using BackendProyectoFinal.Validators.Carrito;
-using BackendProyectoFinal.Validators.EstadoPedido;
-using BackendProyectoFinal.Validators.Pedido;
+using BackendProyectoFinal.Validators.Address;
+using BackendProyectoFinal.Validators.Role;
+using BackendProyectoFinal.Validators.User;
+using BackendProyectoFinal.Validators.Category;
+using BackendProyectoFinal.Validators.Brand;
+using BackendProyectoFinal.Validators.Product;
+using BackendProyectoFinal.Validators.Cart;
+using BackendProyectoFinal.Validators.Order;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,33 +41,33 @@ Env.Load();
 // Config del Encrypter, trae los valores de .Env
 builder.Services.Configure<EncryptConfiguration>(config =>
 {
-    config.PrivateKeyPassword1 = Environment.GetEnvironmentVariable("CLAVE_SECRETA1");
-    config.PrivateKeyPassword2 = Environment.GetEnvironmentVariable("CLAVE_SECRETA2");
+    config.PrivateKey1 = Environment.GetEnvironmentVariable("SECRET_KEY1");
+    config.PrivateKey2 = Environment.GetEnvironmentVariable("SECRET_KEY2");
     config.Salt = Environment.GetEnvironmentVariable("SALT");
 });
 
 // SERVICIOS
-builder.Services.AddKeyedScoped<ICommonService<CategoriaProductoDTO, CategoriaProductoInsertDTO, CategoriaProductoUpdateDTO>, CategoriaProductoService>("CategoriaProductoService");
-builder.Services.AddKeyedScoped<ICommonService<RolDTO, RolInsertDTO, RolUpdateDTO>, RolService>("RolService");
-builder.Services.AddKeyedScoped<ICommonService<DomicilioDTO, DomicilioInsertDTO, DomicilioUpdateDTO>, DomicilioService>("DomicilioService");
-builder.Services.AddKeyedScoped<ICommonService<UsuarioDTO, UsuarioInsertDTO, UsuarioUpdateDTO>, UsuarioService>("UsuarioService");
-builder.Services.AddKeyedScoped<ICommonService<MarcaDTO, MarcaInsertDTO, MarcaUpdateDTO>, MarcaService>("MarcaService");
-builder.Services.AddKeyedScoped<ICommonService<ProductoDTO, ProductoInsertDTO, ProductoUpdateDTO>, ProductoService>("ProductoService");
-builder.Services.AddKeyedScoped<ICommonService<CarritoDTO, CarritoInsertDTO, CarritoUpdateDTO>, CarritoService>("CarritoService");
-builder.Services.AddKeyedScoped<IEstadoPedidoService, EstadoPedidoService>("EstadoPedidoService");
-builder.Services.AddKeyedScoped<ICommonService<PedidoDTO, PedidoInsertDTO, PedidoUpdateDTO>, PedidoService>("PedidoService");
+builder.Services.AddKeyedScoped<ICommonService<CategoryDTO, CategoryInsertDTO, CategoryUpdateDTO>, CategoryService>("CategoryService");
+builder.Services.AddKeyedScoped<ICommonService<RoleDTO, RoleInsertDTO, RoleUpdateDTO>, RoleService>("RoleService");
+builder.Services.AddKeyedScoped<ICommonService<AddressDTO, AddressInsertDTO, AddressUpdateDTO>, AddressService>("AddressService");
+builder.Services.AddKeyedScoped<ICommonService<UserDTO, UserInsertDTO, UserUpdateDTO>, UserService>("UserService");
+builder.Services.AddKeyedScoped<ICommonService<BrandDTO, BrandInsertDTO, BrandUpdateDTO>, BrandService>("BrandService");
+builder.Services.AddKeyedScoped<ICommonService<ProductDTO, ProductInsertDTO, ProductUpdateDTO>, ProductService>("ProductService");
+builder.Services.AddKeyedScoped<ICommonService<CartDTO, CartInsertDTO, CartUpdateDTO>, CartService>("CartService");
+builder.Services.AddKeyedScoped<IOrderStatusService, OrderStatusService>("OrderStatusService");
+builder.Services.AddKeyedScoped<ICommonService<OrderDTO, OrderInsertDTO, OrderUpdateDTO>, OrderService>("OrderService");
 builder.Services.AddKeyedScoped<EncryptService>("EncryptService");
 
 // REPOSITORY
-builder.Services.AddScoped<IRepository<CategoriaProducto>, CategoriaProductoRepository>();
-builder.Services.AddScoped<IRepository<Rol>, RolRepository>();
-builder.Services.AddScoped<IRepository<Domicilio>, DomicilioRepository>();
-builder.Services.AddScoped<IRepository<Usuario>, UsuarioRepository>();
-builder.Services.AddScoped<IRepository<Marca>, MarcaRepository>();
-builder.Services.AddScoped<IRepository<Producto>, ProductoRepository>();
-builder.Services.AddScoped<IRepository<Carrito>, CarritoRepository>();
-builder.Services.AddScoped<IRepository<EstadoPedido>, EstadoPedidoRepository>();
-builder.Services.AddScoped<IRepository<Pedido>, PedidoRepository>();
+builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
+builder.Services.AddScoped<IRepository<Role>, RoleRepository>();
+builder.Services.AddScoped<IRepository<Address>, AddressRepository>();
+builder.Services.AddScoped<IRepository<User>, UserRepository>();
+builder.Services.AddScoped<IRepository<Brand>, BrandRepository>();
+builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
+builder.Services.AddScoped<IRepository<Cart>, CartRepository>();
+builder.Services.AddScoped<IRepository<OrderStatus>, OrderStatusRepository>();
+builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
 
 // ENTITY FRAMEWORK
 builder.Services.AddDbContext<StoreContext>(options =>
@@ -74,24 +75,28 @@ builder.Services.AddDbContext<StoreContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("StoreConnection"));
 });
 // VALIDATORS
-builder.Services.AddScoped<IValidator<CategoriaProductoInsertDTO>, CategoriaProductoInsertValidator>();
-builder.Services.AddScoped<IValidator<CategoriaProductoUpdateDTO>, CategoriaProductoUpdateValidator>();
-builder.Services.AddScoped<IValidator<RolInsertDTO>, RolInsertValidator>();
-builder.Services.AddScoped<IValidator<RolUpdateDTO>, RolUpdateValidator>();
-builder.Services.AddScoped<IValidator<DomicilioInsertDTO>, DomicilioInsertValidator>();
-builder.Services.AddScoped<IValidator<DomicilioUpdateDTO>, DomicilioUpdateValidator>();
-builder.Services.AddScoped<IValidator<UsuarioInsertDTO>, UsuarioInsertValidator>();
-builder.Services.AddScoped<IValidator<UsuarioUpdateDTO>, UsuarioUpdateValidator>();
-builder.Services.AddScoped<IValidator<MarcaInsertDTO>, MarcaInsertValidator>();
-builder.Services.AddScoped<IValidator<MarcaUpdateDTO>, MarcaUpdateValidator>();
-builder.Services.AddScoped<IValidator<ProductoInsertDTO>, ProductoInsertValidator>();
-builder.Services.AddScoped<IValidator<ProductoUpdateDTO>, ProductoUpdateValidator>();
-builder.Services.AddScoped<IValidator<CarritoInsertDTO>, CarritoInsertValidator>();
-builder.Services.AddScoped<IValidator<CarritoUpdateDTO>, CarritoUpdateValidator>();
-builder.Services.AddScoped<IValidator<EstadoPedidoInsertDTO>, EstadoPedidoInsertValidator>();
-builder.Services.AddScoped<IValidator<EstadoPedidoUpdateDTO>, EstadoPedidoUpdateValidator>();
-builder.Services.AddScoped<IValidator<PedidoInsertDTO>, PedidoInsertValidator>();
-builder.Services.AddScoped<IValidator<PedidoUpdateDTO>, PedidoUpdateValidator>();
+builder.Services.AddScoped<IValidator<CategoryInsertDTO>, CategoryInsertValidator>();
+builder.Services.AddScoped<IValidator<CategoryUpdateDTO>, CategoryUpdateValidator>();
+builder.Services.AddScoped<IValidator<RoleInsertDTO>, RoleInsertValidator>();
+builder.Services.AddScoped<IValidator<RoleUpdateDTO>, RoleUpdateValidator>();
+builder.Services.AddScoped<IValidator<AddressInsertDTO>, AddressInsertValidator>();
+builder.Services.AddScoped<IValidator<AddressUpdateDTO>, AddressUpdateValidator>();
+builder.Services.AddScoped<IValidator<UserInsertDTO>, UserInsertValidator>();
+builder.Services.AddScoped<IValidator<UserUpdateDTO>, UserUpdateValidator>();
+builder.Services.AddScoped<IValidator<BrandInsertDTO>, BrandInsertValidator>();
+builder.Services.AddScoped<IValidator<BrandUpdateDTO>, BrandUpdateValidator>();
+builder.Services.AddScoped<IValidator<ProductInsertDTO>, ProductInsertValidator>();
+builder.Services.AddScoped<IValidator<ProductUpdateDTO>, ProductUpdateValidator>();
+builder.Services.AddScoped<IValidator<CartInsertDTO>, CartInsertValidator>();
+builder.Services.AddScoped<IValidator<CartUpdateDTO>, CartUpdateValidator>();
+builder.Services.AddScoped<IValidator<ItemCartInsertDTO>, ItemCartInsertValidator>();
+builder.Services.AddScoped<IValidator<ItemCartUpdateDTO>, ItemCartUpdateValidator>();
+builder.Services.AddScoped<IValidator<OrderStatusInsertDTO>, OrderStatusInsertValidator>();
+builder.Services.AddScoped<IValidator<OrderStatusUpdateDTO>, OrderStatusUpdateValidator>();
+builder.Services.AddScoped<IValidator<OrderInsertDTO>, OrderInsertValidator>();
+builder.Services.AddScoped<IValidator<OrderUpdateDTO>, OrderUpdateValidator>();
+builder.Services.AddScoped<IValidator<ItemOrderInsertDTO>, ItemOrderInsertValidator>();
+builder.Services.AddScoped<IValidator<ItemOrderUpdateDTO>, ItemOrderUpdateValidator>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -12,7 +12,7 @@ namespace BackendProyectoFinal.Services
 
         public EncryptService(IOptions<EncryptConfiguration> config)
         {
-            var fraseFinal = config.Value.PrivateKeyPassword1 + config.Value.PrivateKeyPassword2;
+            var fraseFinal = config.Value.PrivateKey1 + config.Value.PrivateKey2;
 
             // Salt configurado desde .Env
             var salt = Encoding.UTF8.GetBytes(config.Value.Salt);

@@ -22,232 +22,234 @@ namespace BackendProyectoFinal.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.Carrito", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.Address", b =>
                 {
-                    b.Property<int>("CarritoID")
+                    b.Property<int>("AddressID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarritoID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressID"));
 
-                    b.Property<int>("UsuarioID")
+                    b.Property<string>("ApartmentNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Floor")
                         .HasColumnType("int");
 
-                    b.HasKey("CarritoID");
-
-                    b.HasIndex("UsuarioID");
-
-                    b.ToTable("Carritos");
-                });
-
-            modelBuilder.Entity("BackendProyectoFinal.Models.CategoriaProducto", b =>
-                {
-                    b.Property<int>("CategoriaProductoID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoriaProductoID"));
-
-                    b.Property<string>("Nombre")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CategoriaProductoID");
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
 
-                    b.ToTable("CategoriaProductos");
+                    b.HasKey("AddressID");
+
+                    b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.Domicilio", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.Brand", b =>
                 {
-                    b.Property<int>("DomicilioID")
+                    b.Property<int>("BrandID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DomicilioID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BrandID"));
 
-                    b.Property<string>("Departamento")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nombre")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
+                    b.HasKey("BrandID");
 
-                    b.Property<int?>("Piso")
-                        .HasColumnType("int");
-
-                    b.HasKey("DomicilioID");
-
-                    b.ToTable("Domicilios");
+                    b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.EstadoPedido", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.Cart", b =>
                 {
-                    b.Property<int>("EstadoPedidoID")
+                    b.Property<int>("CartID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EstadoPedidoID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartID"));
 
-                    b.Property<int?>("EstadoSiguienteID")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Nombre")
+                    b.HasKey("CartID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("BackendProyectoFinal.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"));
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("EstadoPedidoID");
+                    b.HasKey("CategoryID");
 
-                    b.ToTable("EstadosDePedidos");
+                    b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.ItemCarrito", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.ItemCart", b =>
                 {
-                    b.Property<int>("ItemCarritoID")
+                    b.Property<int>("ItemCartID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemCarritoID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemCartID"));
 
-                    b.Property<int>("Cantidad")
+                    b.Property<int>("CartID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CarritoID")
+                    b.Property<int>("ProductID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductoId")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("ItemCarritoID");
+                    b.HasKey("ItemCartID");
 
-                    b.HasIndex("CarritoID");
+                    b.HasIndex("CartID");
 
-                    b.HasIndex("ProductoId");
+                    b.HasIndex("ProductID");
 
-                    b.ToTable("ItemCarrito");
+                    b.ToTable("ItemsCarts");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.ItemPedido", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.ItemOrder", b =>
                 {
-                    b.Property<int>("ItemPedidoID")
+                    b.Property<int>("ItemOrderID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemPedidoID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemOrderID"));
 
-                    b.Property<int>("Cantidad")
+                    b.Property<int>("OrderID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PedidoID")
+                    b.Property<int>("ProductID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductoId")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("ItemPedidoID");
+                    b.HasKey("ItemOrderID");
 
-                    b.HasIndex("PedidoID");
+                    b.HasIndex("OrderID");
 
-                    b.HasIndex("ProductoId");
+                    b.HasIndex("ProductID");
 
-                    b.ToTable("ItemPedido");
+                    b.ToTable("ItemsOrders");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.Marca", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.Order", b =>
                 {
-                    b.Property<int>("MarcaID")
+                    b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MarcaID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"));
 
-                    b.Property<string>("Nombre")
+                    b.Property<int>("AddressID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusdOrderID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderID");
+
+                    b.HasIndex("AddressID");
+
+                    b.HasIndex("StatusdOrderID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("BackendProyectoFinal.Models.OrderStatus", b =>
+                {
+                    b.Property<int>("OrderStatusID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderStatusID"));
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("MarcaID");
+                    b.Property<int?>("NextStatusOrderID")
+                        .HasColumnType("int");
 
-                    b.ToTable("Marcas");
+                    b.HasKey("OrderStatusID");
+
+                    b.HasIndex("NextStatusOrderID");
+
+                    b.ToTable("OrderStatuses");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.Pedido", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.Product", b =>
                 {
-                    b.Property<int>("PedidoID")
+                    b.Property<int>("ProductID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PedidoID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductID"));
 
-                    b.Property<int>("DomicilioID")
+                    b.Property<int>("BrandID")
                         .HasColumnType("int");
 
-                    b.Property<int>("EstadoPedidoID")
+                    b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioID")
-                        .HasColumnType("int");
-
-                    b.HasKey("PedidoID");
-
-                    b.HasIndex("DomicilioID");
-
-                    b.HasIndex("EstadoPedidoID");
-
-                    b.HasIndex("UsuarioID");
-
-                    b.ToTable("Pedidos");
-                });
-
-            modelBuilder.Entity("BackendProyectoFinal.Models.Producto", b =>
-                {
-                    b.Property<int>("ProductoID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductoID"));
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoriaProductoID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CodigoML")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Eliminado")
-                        .HasColumnType("bit");
-
-                    b.Property<DateOnly>("FechaCreacion")
+                    b.Property<DateOnly>("CreationDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("Imagen")
+                    b.Property<bool>("Eliminated")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MarcaID")
-                        .HasColumnType("int");
+                    b.Property<string>("MLCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Precio")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Titulo")
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProductoID");
+                    b.HasKey("ProductID");
 
-                    b.HasIndex("CategoriaProductoID");
+                    b.HasIndex("BrandID");
 
-                    b.HasIndex("MarcaID");
+                    b.HasIndex("CategoryID");
 
-                    b.ToTable("Productos");
+                    b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.Rol", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.Role", b =>
                 {
                     b.Property<int>("RolID")
                         .ValueGeneratedOnAdd()
@@ -255,7 +257,7 @@ namespace BackendProyectoFinal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RolID"));
 
-                    b.Property<string>("Nombre")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -264,32 +266,28 @@ namespace BackendProyectoFinal.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.Usuario", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.User", b =>
                 {
-                    b.Property<int>("UsuarioID")
+                    b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuarioID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"));
 
-                    b.Property<string>("Apellido")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DomicilioID")
+                    b.Property<int>("AddressID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Eliminado")
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("Eliminated")
                         .HasColumnType("bit");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("FechaNacimiento")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Nombre")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -297,143 +295,153 @@ namespace BackendProyectoFinal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RolID")
+                    b.Property<int>("RoleID")
                         .HasColumnType("int");
 
-                    b.HasKey("UsuarioID");
+                    b.Property<string>("SurName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("DomicilioID");
+                    b.HasKey("UserID");
 
-                    b.HasIndex("RolID");
+                    b.HasIndex("AddressID");
 
-                    b.ToTable("Usuarios");
+                    b.HasIndex("RoleID");
+
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.Carrito", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.Cart", b =>
                 {
-                    b.HasOne("BackendProyectoFinal.Models.Usuario", "Usuario")
+                    b.HasOne("BackendProyectoFinal.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UsuarioID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.EstadoPedido", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.ItemCart", b =>
                 {
-                    b.HasOne("BackendProyectoFinal.Models.EstadoPedido", "EstadoSiguiente")
-                        .WithMany()
-                        .HasForeignKey("EstadoPedidoID")
+                    b.HasOne("BackendProyectoFinal.Models.Cart", "Cart")
+                        .WithMany("ListCarts")
+                        .HasForeignKey("CartID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("EstadoSiguiente");
+                    b.HasOne("BackendProyectoFinal.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.ItemCarrito", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.ItemOrder", b =>
                 {
-                    b.HasOne("BackendProyectoFinal.Models.Carrito", null)
-                        .WithMany("ListaCarrito")
-                        .HasForeignKey("CarritoID");
-
-                    b.HasOne("BackendProyectoFinal.Models.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("ProductoId")
+                    b.HasOne("BackendProyectoFinal.Models.Order", "Order")
+                        .WithMany("ListOrders")
+                        .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Producto");
+                    b.HasOne("BackendProyectoFinal.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.ItemPedido", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.Order", b =>
                 {
-                    b.HasOne("BackendProyectoFinal.Models.Pedido", null)
-                        .WithMany("ListaPedido")
-                        .HasForeignKey("PedidoID");
-
-                    b.HasOne("BackendProyectoFinal.Models.Producto", "Producto")
+                    b.HasOne("BackendProyectoFinal.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("ProductoId")
+                        .HasForeignKey("AddressID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Producto");
+                    b.HasOne("BackendProyectoFinal.Models.OrderStatus", "StatusdOrder")
+                        .WithMany()
+                        .HasForeignKey("StatusdOrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BackendProyectoFinal.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("StatusdOrder");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.Pedido", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.OrderStatus", b =>
                 {
-                    b.HasOne("BackendProyectoFinal.Models.Domicilio", "DomicilioEntrega")
+                    b.HasOne("BackendProyectoFinal.Models.OrderStatus", "NextStatus")
                         .WithMany()
-                        .HasForeignKey("DomicilioID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NextStatusOrderID");
 
-                    b.HasOne("BackendProyectoFinal.Models.EstadoPedido", "EstadoPedido")
-                        .WithMany()
-                        .HasForeignKey("EstadoPedidoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BackendProyectoFinal.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DomicilioEntrega");
-
-                    b.Navigation("EstadoPedido");
-
-                    b.Navigation("Usuario");
+                    b.Navigation("NextStatus");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.Producto", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.Product", b =>
                 {
-                    b.HasOne("BackendProyectoFinal.Models.CategoriaProducto", "CategoriaProducto")
+                    b.HasOne("BackendProyectoFinal.Models.Brand", "Brand")
                         .WithMany()
-                        .HasForeignKey("CategoriaProductoID")
+                        .HasForeignKey("BrandID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BackendProyectoFinal.Models.Marca", "Marca")
+                    b.HasOne("BackendProyectoFinal.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("MarcaID")
+                        .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CategoriaProducto");
+                    b.Navigation("Brand");
 
-                    b.Navigation("Marca");
+                    b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.Usuario", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.User", b =>
                 {
-                    b.HasOne("BackendProyectoFinal.Models.Domicilio", "Domicilio")
+                    b.HasOne("BackendProyectoFinal.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("DomicilioID")
+                        .HasForeignKey("AddressID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BackendProyectoFinal.Models.Rol", "Rol")
+                    b.HasOne("BackendProyectoFinal.Models.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RolID")
+                        .HasForeignKey("RoleID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Domicilio");
+                    b.Navigation("Address");
 
-                    b.Navigation("Rol");
+                    b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.Carrito", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.Cart", b =>
                 {
-                    b.Navigation("ListaCarrito");
+                    b.Navigation("ListCarts");
                 });
 
-            modelBuilder.Entity("BackendProyectoFinal.Models.Pedido", b =>
+            modelBuilder.Entity("BackendProyectoFinal.Models.Order", b =>
                 {
-                    b.Navigation("ListaPedido");
+                    b.Navigation("ListOrders");
                 });
 #pragma warning restore 612, 618
         }
