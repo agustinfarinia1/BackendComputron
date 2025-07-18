@@ -1,7 +1,7 @@
 ﻿using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Utils.Mappers;
 using Microsoft.IdentityModel.Tokens;
-using BackendProyectoFinal.DTOs.CategoryDTO;
+using BackendProyectoFinal.DTOs.Category;
 using BackendProyectoFinal.Models;
 
 namespace BackendProyectoFinal.Services
@@ -20,7 +20,7 @@ namespace BackendProyectoFinal.Services
         public async Task<IEnumerable<CategoryDTO>> Get() 
         {
             var categorias = await _repository.Get();
-            // CONVIERTE LOS TIPOS DE CATEGORIA A DTO
+            // CONVIERTE Las Categories A DTO
             return categorias.Select(c => 
             CategoryMapper.ConvertCategoryToDTO(c)
             );

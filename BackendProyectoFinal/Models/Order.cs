@@ -12,9 +12,9 @@ namespace BackendProyectoFinal.Models
         public int UserID { get; set; }
         [ForeignKey("UserID")]
         public virtual User User { get; set; }
-        public int StatusdOrderID { get; set; }
-        [ForeignKey("StatusdOrderID")]
-        public virtual OrderStatus StatusdOrder { get; set; }
+        public int OrderStatusID { get; set; }
+        [ForeignKey("OrderStatusID")]
+        public virtual OrderStatus OrderStatus { get; set; }
         public int AddressID { get; set; }
         [ForeignKey("AddressID")]
         public virtual Address Address { get; set; }

@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using BackendProyectoFinal.DTOs.UserDTO;
+using BackendProyectoFinal.DTOs.User;
 
 namespace BackendProyectoFinal.Validators.User
 {

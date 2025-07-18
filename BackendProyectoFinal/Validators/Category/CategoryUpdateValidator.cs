@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using BackendProyectoFinal.DTOs.CategoryDTO;
+using BackendProyectoFinal.DTOs.Category;
 
 namespace BackendProyectoFinal.Validators.Category
 {

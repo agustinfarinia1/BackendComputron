@@ -1,18 +1,21 @@
-﻿using BackendProyectoFinal.Repositories;
-using Microsoft.IdentityModel.Tokens;
+﻿using BackendProyectoFinal.DTOs.Cart;
 using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
-using BackendProyectoFinal.DTOs.CartDTO;
+using BackendProyectoFinal.Repositories;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BackendProyectoFinal.Services
 {
-    public class CartService : 
-        ICommonService<CartDTO, CartInsertDTO, CartUpdateDTO>
+    public class CartService : ICartService
     {
+        private IItemCartService _itemCartService;
         private IRepository<Cart> _repository;
         public List<string> Errors { get; }
-        public CartService(IRepository<Cart> repository)
+        public CartService(
+            [FromKeyedServices("ItemCartService")] IItemCartService itemCartService,
+            IRepository<Cart> repository)
         {
+            _itemCartService = itemCartService;
             _repository = repository;
             Errors = new List<string>();
         }
@@ -20,9 +23,19 @@ namespace BackendProyectoFinal.Services
         public async Task<IEnumerable<CartDTO>> Get()
         {
             var carts = await _repository.Get();
-            // CONVIERTE LOS Carritos A DTO
-            return carts.Select(c 
-                => CartMapper.ConvertCartToDTO(c));
+            // Convierte los Carts A DTO
+            var cartsDTO = carts.Select(c
+                => CartMapper.ConvertCartToDTO(c)).ToList();
+            foreach (var cartDTO in cartsDTO)
+            {
+                // Lista de ItemCart ligada a Cart
+                var listCartDTO = await _itemCartService.GetItemCartByCartId(cartDTO.Id);
+                if(listCartDTO != null && listCartDTO.Count() > 0)
+                {
+                    CartMapper.UpdateCart(cartDTO, listCartDTO.ToList());
+                }
+            }
+            return cartsDTO;
         }
 
         public async Task<CartDTO?> GetById(int idCart)
@@ -30,31 +43,32 @@ namespace BackendProyectoFinal.Services
             var cart = await _repository.GetById(idCart);
             if (cart != null)
             {
-                return CartMapper.ConvertCartToDTO(cart);
+                var cartDTO = CartMapper.ConvertCartToDTO(cart);
+                var listCartDTO = await _itemCartService.GetItemCartByCartId(cartDTO.Id);
+                if(listCartDTO != null)
+                    CartMapper.UpdateCart(cartDTO, listCartDTO.ToList());
+                return cartDTO;
             }
             return null;
         }
 
+        // Filtra por UserID
         public async Task<CartDTO?> GetByField(string field)
         {
-            var cart = await _repository.GetByField(field);
+            var cart = _repository.Search(c => c.UserID == int.Parse(field)).FirstOrDefault();
             if (cart != null)
             {
-                return CartMapper.ConvertCartToDTO(cart);
+                var cartDTO = CartMapper.ConvertCartToDTO(cart);
+
+                var listCartDTO = await _itemCartService.GetItemCartByCartId(cartDTO.Id);
+                if (listCartDTO != null)
+                    CartMapper.UpdateCart(cartDTO, listCartDTO.ToList());
+                return cartDTO;
             }
             return null;
         }
 
-        public async Task<ItemCart?> GetByItemListaId(int userID, int itemID)
-        {
-            var userCart = await GetByField(userID.ToString());
-            if (userCart == null)
-            {
-                return userCart.ListCarts.FirstOrDefault(e => e.ItemCartID == itemID);
-            }
-            return null;
-        }
-
+        // Inicializacion del Cart, todas las operaciones con la listCarts se hacen dentro de ItemCart
         public async Task<CartDTO> Add(CartInsertDTO cartInsertDTO)
         {
             var cart = CartMapper.ConvertDTOToModel(cartInsertDTO);
@@ -63,17 +77,9 @@ namespace BackendProyectoFinal.Services
             return CartMapper.ConvertCartToDTO(cart);
         }
 
+        // No tiene uso, solo se modifica cuando se crea la referencia en el inicio
         public async Task<CartDTO?> Update(CartUpdateDTO cartUpdateDTO)
         {
-            var cart = await _repository.GetById(cartUpdateDTO.Id);
-            if (cart != null)
-            {
-                CartMapper.UpdateCart(cart, cartUpdateDTO);
-                _repository.Update(cart);
-                await _repository.Save();
-
-                return CartMapper.ConvertCartToDTO(cart);
-            }
             return null;
         }
 
@@ -118,6 +124,11 @@ namespace BackendProyectoFinal.Services
                 Errors.Add("No puede existir un carrito con un usuario ya existente");
             }
             return Errors.IsNullOrEmpty() == true ? true : false;
+        }
+
+        public void EmptyCart(int cartID, int userID)
+        {
+            throw new NotImplementedException();
         }
     }
 }

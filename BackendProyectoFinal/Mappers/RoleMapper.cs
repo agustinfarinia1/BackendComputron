@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs.RoleDTO;
+﻿using BackendProyectoFinal.DTOs.Role;
 using BackendProyectoFinal.Models;
 
 namespace BackendProyectoFinal.Utils.Mappers
@@ -9,7 +9,7 @@ namespace BackendProyectoFinal.Utils.Mappers
         {
             var roleDTO = new RoleDTO()
             {
-                Id = role.RolID,
+                Id = role.RoleID,
                 Name = role.Name
             };
             return roleDTO;

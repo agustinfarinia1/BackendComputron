@@ -163,7 +163,7 @@ namespace BackendProyectoFinal.Migrations
                     b.Property<int>("AddressID")
                         .HasColumnType("int");
 
-                    b.Property<int>("StatusdOrderID")
+                    b.Property<int>("OrderStatusID")
                         .HasColumnType("int");
 
                     b.Property<int>("UserID")
@@ -173,7 +173,7 @@ namespace BackendProyectoFinal.Migrations
 
                     b.HasIndex("AddressID");
 
-                    b.HasIndex("StatusdOrderID");
+                    b.HasIndex("OrderStatusID");
 
                     b.HasIndex("UserID");
 
@@ -192,12 +192,12 @@ namespace BackendProyectoFinal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NextStatusOrderID")
+                    b.Property<int?>("NextOrderStatusID")
                         .HasColumnType("int");
 
                     b.HasKey("OrderStatusID");
 
-                    b.HasIndex("NextStatusOrderID");
+                    b.HasIndex("NextOrderStatusID");
 
                     b.ToTable("OrderStatuses");
                 });
@@ -251,17 +251,17 @@ namespace BackendProyectoFinal.Migrations
 
             modelBuilder.Entity("BackendProyectoFinal.Models.Role", b =>
                 {
-                    b.Property<int>("RolID")
+                    b.Property<int>("RoleID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RolID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleID"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RolID");
+                    b.HasKey("RoleID");
 
                     b.ToTable("Roles");
                 });
@@ -368,9 +368,9 @@ namespace BackendProyectoFinal.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BackendProyectoFinal.Models.OrderStatus", "StatusdOrder")
+                    b.HasOne("BackendProyectoFinal.Models.OrderStatus", "OrderStatus")
                         .WithMany()
-                        .HasForeignKey("StatusdOrderID")
+                        .HasForeignKey("OrderStatusID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -382,7 +382,7 @@ namespace BackendProyectoFinal.Migrations
 
                     b.Navigation("Address");
 
-                    b.Navigation("StatusdOrder");
+                    b.Navigation("OrderStatus");
 
                     b.Navigation("User");
                 });
@@ -391,7 +391,7 @@ namespace BackendProyectoFinal.Migrations
                 {
                     b.HasOne("BackendProyectoFinal.Models.OrderStatus", "NextStatus")
                         .WithMany()
-                        .HasForeignKey("NextStatusOrderID");
+                        .HasForeignKey("NextOrderStatusID");
 
                     b.Navigation("NextStatus");
                 });

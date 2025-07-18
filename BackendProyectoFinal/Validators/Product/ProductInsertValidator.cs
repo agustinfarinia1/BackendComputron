@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using BackendProyectoFinal.DTOs.ProductDTO;
+using BackendProyectoFinal.DTOs.Product;
 
 namespace BackendProyectoFinal.Validators.Product
 {

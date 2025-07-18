@@ -1,7 +1,7 @@
 ﻿using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Utils.Mappers;
 using Microsoft.IdentityModel.Tokens;
-using BackendProyectoFinal.DTOs.RoleDTO;
+using BackendProyectoFinal.DTOs.Role;
 using BackendProyectoFinal.Models;
 
 namespace BackendProyectoFinal.Services
@@ -19,7 +19,7 @@ namespace BackendProyectoFinal.Services
         public async Task<IEnumerable<RoleDTO>> Get() 
         {
             var roles = await _repository.Get();
-            // CONVIERTE LOS ROLES A DTO
+            // Convierte los Roles A DTO
             return roles.Select(role => 
             RoleMapper.ConvertRoleToDTO(role)
             );
@@ -37,7 +37,7 @@ namespace BackendProyectoFinal.Services
 
         public async Task<RoleDTO?> GetByField(string field)
         {
-            var role = _repository.Search(r => r.RolID == int.Parse(field)).FirstOrDefault();
+            var role = _repository.Search(r => r.RoleID == int.Parse(field)).FirstOrDefault();
             if (role != null)
             {
                 return RoleMapper.ConvertRoleToDTO(role);
@@ -99,7 +99,7 @@ namespace BackendProyectoFinal.Services
         {
             if (_repository.Search(
                 r => r.Name.ToUpper() == RoleDTO.Name.ToUpper()
-                && RoleDTO.Id != r.RolID).Count() > 0)
+                && RoleDTO.Id != r.RoleID).Count() > 0)
             {
                 Errors.Add("No puede existir un rol con un nombre ya existente");
             }

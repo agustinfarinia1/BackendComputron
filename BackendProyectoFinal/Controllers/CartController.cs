@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FluentValidation;
-using BackendProyectoFinal.DTOs.CartDTO;
 using BackendProyectoFinal.Services;
+using BackendProyectoFinal.DTOs.Cart;
 
 namespace BackendProyectoFinal.Controllers
 {
@@ -9,12 +9,12 @@ namespace BackendProyectoFinal.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        private ICommonService<CartDTO, CartInsertDTO, CartUpdateDTO> _cartService;
+        private ICartService _cartService;
         private IValidator<CartInsertDTO> _cartInsertValidator;
         private IValidator<CartUpdateDTO> _cartUpdateValidator;
 
         public CartController(
-            [FromKeyedServices("CartService")] ICommonService<CartDTO, CartInsertDTO, CartUpdateDTO> cartService,
+            [FromKeyedServices("CartService")] ICartService cartService,
             IValidator<CartInsertDTO> cartInsertValidator,
             IValidator<CartUpdateDTO> cartUpdateValidator)
         {
@@ -27,13 +27,22 @@ namespace BackendProyectoFinal.Controllers
         public async Task<IEnumerable<CartDTO>> Get()
             => await _cartService.Get();
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CartDTO>> GetById(int id)
+        [HttpGet("{cartID}")]
+        public async Task<ActionResult<CartDTO>> GetById(int cartID)
         {
-            var cart = await _cartService.GetById(id);
+            var cart = await _cartService.GetById(cartID);
             return cart == null ? NotFound() : Ok(cart);
         }
 
+        [HttpGet("user/{userID}")]
+        public async Task<ActionResult<CartDTO>> GetByUserID(int userID)
+        {
+            var cart = await _cartService.GetByField(userID.ToString());
+            return cart == null ? NotFound() : Ok(cart);
+        }
+
+        // Se utiliza en el UserController -> Add
+        // Ya que el usuario no deberia existir sin un Cart
         [HttpPost]
         public async Task<ActionResult<CartDTO>> Add(CartInsertDTO cartInsertDTO)
         {
@@ -56,6 +65,8 @@ namespace BackendProyectoFinal.Controllers
             return CreatedAtAction(nameof(GetById), new { id = cartDTO.Id }, cartDTO);
         }
 
+        // Update y Delete no se utilizaran directamente.
+        // Cart se elimina de manera Cascade con el UserID
         [HttpPut]
         public async Task<ActionResult<CartDTO>> Update(CartUpdateDTO cartUpdateDTO)
         {

@@ -1,4 +1,5 @@
-﻿using BackendProyectoFinal.DTOs.UserDTO;
+﻿using BackendProyectoFinal.DTOs.Cart;
+using BackendProyectoFinal.DTOs.User;
 using BackendProyectoFinal.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
@@ -7,18 +8,21 @@ namespace BackendProyectoFinal.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class UserController : ControllerBase
     {
         private ICommonService<UserDTO, UserInsertDTO, UserUpdateDTO> _userService;
+        private ICartService _cartService;
         private IValidator<UserInsertDTO> _userInsertValidator;
         private IValidator<UserUpdateDTO> _userUpdateValidator;
 
-        public UsuarioController(
+        public UserController(
             [FromKeyedServices("UserService")] ICommonService<UserDTO, UserInsertDTO, UserUpdateDTO> usuarioService,
+            [FromKeyedServices("CartService")] ICartService cartService,
             IValidator<UserInsertDTO> userInsertValidator,
             IValidator<UserUpdateDTO> userUpdateValidator)
         {
             _userService = usuarioService;
+            _cartService = cartService;
             _userInsertValidator = userInsertValidator;
             _userUpdateValidator = userUpdateValidator;
         }
@@ -51,6 +55,10 @@ namespace BackendProyectoFinal.Controllers
                 return BadRequest(_userService.Errors);
             }
             var userDTO = await _userService.Add(userInsertDTO);
+            var CartInsertDTO = new CartInsertDTO() { 
+                UserId = userDTO.Id
+            };
+            await _cartService.Add(CartInsertDTO);
             // CreatedAtAction otorga el metodo para la consulta del objeto generado
             // el campo por el cual se puede buscar y el objeto generado en esta ejecucion
             return CreatedAtAction(nameof(GetById), new { id = userDTO.Id }, userDTO);

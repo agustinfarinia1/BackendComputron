@@ -16,9 +16,15 @@ namespace BackendProyectoFinal.Repositories
         public async Task<Role?> GetById(int id)
             => await _context.Roles.FindAsync(id);
 
-        public async Task<Role?> GetByField(string field)
-            => await _context.Roles
-                .FirstOrDefaultAsync(r => r.Name == field);
+        public async Task<IEnumerable<Role>?> GetByField(string field)
+        {
+            var search = Search(r => r.Name == field);
+            if (search != null)
+            {
+                return search.ToList();
+            }
+            return null;
+        }
 
         public async Task Add(Role role)
               => await _context.Roles.AddAsync(role);

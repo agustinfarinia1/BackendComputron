@@ -17,9 +17,16 @@ namespace BackendProyectoFinal.Repositories
         public async Task<Cart?> GetById(int idCart)
             => await _context.Carts.FindAsync(idCart);
 
-        public async Task<Cart?> GetByField(string field)
-            => await _context.Carts
-                .FirstOrDefaultAsync(c => c.UserID == int.Parse(field));
+        // Retorna una lista con los Carts que estan en dicho filtro
+        public async Task<IEnumerable<Cart>?> GetByField(string field)
+        {
+            var search = Search(c => c.UserID == int.Parse(field));
+            if (search != null)
+            {
+                return search.ToList(); 
+            }
+            return null;
+        }
 
         public async Task Add(Cart cart)
               => await _context.Carts.AddAsync(cart);

@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using BackendProyectoFinal.DTOs.ItemOrderDTO;
+using BackendProyectoFinal.DTOs.ItemOrder;
 
 namespace BackendProyectoFinal.Validators.Order
 {

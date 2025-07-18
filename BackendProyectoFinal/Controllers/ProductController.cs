@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using BackendProyectoFinal.Services;
-using BackendProyectoFinal.DTOs.ProductDTO;
+using BackendProyectoFinal.DTOs.Product;
 
 namespace BackendProyectoFinal.Controllers
 {
@@ -14,7 +14,7 @@ namespace BackendProyectoFinal.Controllers
         private IValidator<ProductUpdateDTO> _productUpdateValidator;
 
         public ProductController(
-            [FromKeyedServices("ProductoService")] ICommonService<ProductDTO, ProductInsertDTO, ProductUpdateDTO> productoService,
+            [FromKeyedServices("ProductService")] ICommonService<ProductDTO, ProductInsertDTO, ProductUpdateDTO> productoService,
             IValidator<ProductInsertDTO> productInsertValidator,
             IValidator<ProductUpdateDTO> productUpdateValidator)
         {

@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs.OrderStatusDTO;
+﻿using BackendProyectoFinal.DTOs.OrderStatus;
 using BackendProyectoFinal.Models;
 
 namespace BackendProyectoFinal.Mappers
@@ -11,7 +11,7 @@ namespace BackendProyectoFinal.Mappers
             {
                 Id = orderStatus.OrderStatusID,
                 Name = orderStatus.Name,
-                NextStatusOrderId = orderStatus.NextStatusOrderID
+                NextOrderStatusId = orderStatus.NextOrderStatusID
             };
             return orderStatusDTO;
         }
@@ -22,8 +22,8 @@ namespace BackendProyectoFinal.Mappers
             {
                 Name = orderStatusDTO.Name
             };
-            if (orderStatusDTO.NextStatusOrderId.HasValue)
-                orderStatus.NextStatusOrderID = orderStatusDTO.NextStatusOrderId;
+            if (orderStatusDTO.NextOrderStatusId.HasValue)
+                orderStatus.NextOrderStatusID = orderStatusDTO.NextOrderStatusId;
 
             return orderStatus;
         }
@@ -33,18 +33,18 @@ namespace BackendProyectoFinal.Mappers
             if (!string.IsNullOrWhiteSpace(orderStatusDTO.Name))
                 orderStatus.Name = orderStatusDTO.Name;
 
-            if (orderStatusDTO.NextStatusOrderId.HasValue)
-                orderStatus.NextStatusOrderID = orderStatusDTO.NextStatusOrderId;
+            if (orderStatusDTO.NextOrderStatusId.HasValue)
+                orderStatus.NextOrderStatusID = orderStatusDTO.NextOrderStatusId;
         }
 
-        public static OrderStatusUpdateDTO GenerateOrderStatus(int id, string name,int? nextStatusOrderID)
+        public static OrderStatusUpdateDTO GenerateOrderStatus(int id, string name,int? nextOrderStatusID)
         {
             var estadoPedidoUpdateDTO = new OrderStatusUpdateDTO()
             {
                 Id = id,
                 Name = name
             };
-            if(nextStatusOrderID.HasValue) estadoPedidoUpdateDTO.NextStatusOrderId = nextStatusOrderID;
+            if(nextOrderStatusID.HasValue) estadoPedidoUpdateDTO.NextOrderStatusId = nextOrderStatusID;
             return estadoPedidoUpdateDTO;
         }
     }

@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using BackendProyectoFinal.DTOs.AddressDTO;
+using BackendProyectoFinal.DTOs.Address;
 
 namespace BackendProyectoFinal.Validators.Address
 {

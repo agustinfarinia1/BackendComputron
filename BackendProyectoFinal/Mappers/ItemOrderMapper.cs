@@ -1,5 +1,5 @@
 ﻿using BackendProyectoFinal.Models;
-using BackendProyectoFinal.DTOs.ItemOrderDTO;
+using BackendProyectoFinal.DTOs.ItemOrder;
 
 namespace BackendProyectoFinal.Mappers
 {
@@ -28,7 +28,7 @@ namespace BackendProyectoFinal.Mappers
             return itemOrder;
         }
 
-        public static void UpdateItemCart(ItemOrder itemOrder, ItemOrderUpdateDTO itemOrderDTO)
+        public static void UpdateItemOrder(ItemOrder itemOrder, ItemOrderUpdateDTO itemOrderDTO)
         {
             if (itemOrderDTO.ProductId > 0)
                 itemOrder.ProductID = itemOrderDTO.ProductId;

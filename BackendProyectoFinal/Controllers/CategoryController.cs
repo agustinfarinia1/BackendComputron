@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using BackendProyectoFinal.DTOs.CategoryDTO;
+using BackendProyectoFinal.DTOs.Category;
 using BackendProyectoFinal.Services;
 
 namespace BackendProyectoFinal.Controllers

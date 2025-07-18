@@ -6,7 +6,7 @@ namespace BackendProyectoFinal.Repositories
     {
         public Task<IEnumerable<TEntity>> Get();
         public Task<TEntity?> GetById(int id);
-        public Task<TEntity?> GetByField(string field);
+        public Task<IEnumerable<TEntity>?> GetByField(string field);
         public Task Add(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);

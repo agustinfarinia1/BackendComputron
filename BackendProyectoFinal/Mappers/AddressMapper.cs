@@ -1,5 +1,5 @@
 ﻿using BackendProyectoFinal.Models;
-using BackendProyectoFinal.DTOs.AddressDTO;
+using BackendProyectoFinal.DTOs.Address;
 
 namespace BackendProyectoFinal.Utils.Mappers
 {

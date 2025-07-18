@@ -18,9 +18,15 @@ namespace BackendProyectoFinal.Repositories
 
         // TODO - Esto no es del todo correcto porque Domicilio tendria que tener tambien numero para hacer una mejor busqueda
         // podria hacer que lo mande en un string separado por un espacio y subdividir el string(para que siga con el mismo cuerpo general)
-        public async Task<Address?> GetByField(string field)
-            => await _context.Addresses
-                .FirstOrDefaultAsync(a => a.Name == field);
+        // O generar una interface especifica para Address
+        public async Task<IEnumerable<Address>?> GetByField(string field)
+        { 
+            var search = Search((a => a.Name == field));
+            if (search != null) {
+                return search.ToList();
+            }
+            return null;
+        }
 
         public async Task Add(Address address)
               => await _context.Addresses.AddAsync(address);

@@ -7,7 +7,7 @@ namespace BackendProyectoFinal.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RolID { get; set; }
+        public int RoleID { get; set; }
         public string Name { get; set; }
     }
 }

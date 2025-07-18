@@ -1,5 +1,5 @@
 ﻿using BackendProyectoFinal.Models;
-using BackendProyectoFinal.DTOs.ItemCartDTO;
+using BackendProyectoFinal.DTOs.ItemCart;
 
 namespace BackendProyectoFinal.Mappers
 {

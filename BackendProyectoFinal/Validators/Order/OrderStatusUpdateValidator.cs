@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs.OrderStatusDTO;
+﻿using BackendProyectoFinal.DTOs.OrderStatus;
 using FluentValidation;
 
 namespace BackendProyectoFinal.Validators.Order

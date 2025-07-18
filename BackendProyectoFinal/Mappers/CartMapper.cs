@@ -1,5 +1,6 @@
-﻿using BackendProyectoFinal.DTOs.CartDTO;
-using BackendProyectoFinal.Models;
+﻿using BackendProyectoFinal.Models;
+using BackendProyectoFinal.DTOs.Cart;
+using BackendProyectoFinal.DTOs.ItemCart;
 
 namespace BackendProyectoFinal.Mappers
 {
@@ -10,8 +11,7 @@ namespace BackendProyectoFinal.Mappers
             var cartDTO = new CartDTO()
             {
                 Id = carrito.CartID,
-                UserId = carrito.UserID,
-                ListCarts = carrito.ListCarts
+                UserId = carrito.UserID
             };
             return cartDTO;
         }
@@ -21,23 +21,15 @@ namespace BackendProyectoFinal.Mappers
             var cart = new Cart()
             {
                 UserID = cartDTO.UserId,
-                ListCarts = cartDTO.ListCarts
+                ListCarts = new List<ItemCart>()
             };
             return cart;
         }
 
-        public static void UpdateCart(Cart cart, CartUpdateDTO cartDTO)
+        public static void UpdateCart(CartDTO cartDTO,List<ItemCartDTO> listCart)
         {
-            if (cartDTO.Id > 0)
-                cart.CartID = cartDTO.Id;
-
-            if (cartDTO.UserId > 0)
-                cart.UserID = cartDTO.UserId;
-
-            if (cartDTO.ListCarts.Count() > 0)
-            {
-                cart.ListCarts = cartDTO.ListCarts;
-            }
+            if (listCart.Count() > 0)
+                cartDTO.ListCarts = listCart;
         }
     }
 }

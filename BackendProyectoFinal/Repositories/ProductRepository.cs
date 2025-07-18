@@ -19,9 +19,15 @@ namespace BackendProyectoFinal.Repositories
             .FirstOrDefaultAsync(p => p.ProductID == id && p.Eliminated == false);
 
         // Busca por titulo, podria buscar por BrandID
-        public async Task<Product?> GetByField(string field)
-            => await _context.Products
-                .FirstOrDefaultAsync(p => p.Title == field && p.Eliminated == false);
+        public async Task<IEnumerable<Product>?> GetByField(string field)
+        {
+            var search = Search(p => p.Title == field && p.Eliminated == false);
+            if (search != null)
+            {
+                return search.ToList();
+            }
+            return null;
+        }
 
         public async Task Add(Product product)
               => await _context.Products.AddAsync(product);

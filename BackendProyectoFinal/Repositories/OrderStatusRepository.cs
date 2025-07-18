@@ -16,9 +16,15 @@ namespace BackendProyectoFinal.Repositories
         public async Task<OrderStatus?> GetById(int id)
             => await _context.OrderStatuses.FindAsync(id);
 
-        public async Task<OrderStatus?> GetByField(string field)
-            => await _context.OrderStatuses
-                .FirstOrDefaultAsync(o => o.Name == field);
+        public async Task<IEnumerable<OrderStatus>?> GetByField(string field)
+        {
+            var search = Search(o => o.Name == field);
+            if (search != null)
+            {
+                return search.ToList();
+            }
+            return null;
+        }
 
         public async Task Add(OrderStatus orderStatus)
               => await _context.OrderStatuses.AddAsync(orderStatus);

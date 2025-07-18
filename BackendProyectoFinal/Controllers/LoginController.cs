@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs.UserDTO;
+﻿using BackendProyectoFinal.DTOs.User;
 using BackendProyectoFinal.Services;
 using Microsoft.AspNetCore.Mvc;
 

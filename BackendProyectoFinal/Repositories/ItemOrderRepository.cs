@@ -16,9 +16,15 @@ namespace BackendProyectoFinal.Repositories
         public async Task<ItemOrder?> GetById(int id)
             => await _context.ItemsOrders.FindAsync(id);
 
-        public async Task<ItemOrder?> GetByField(string field)
-            => await _context.ItemsOrders
-                .FirstOrDefaultAsync(i => i.OrderID == int.Parse(field));
+        public async Task<IEnumerable<ItemOrder>?> GetByField(string field)
+        {
+            var search = Search(i => i.OrderID == int.Parse(field));
+            if (search != null)
+            {
+                return search.ToList();
+            }
+            return null;
+        }
 
         public async Task Add(ItemOrder role)
               => await _context.ItemsOrders.AddAsync(role);

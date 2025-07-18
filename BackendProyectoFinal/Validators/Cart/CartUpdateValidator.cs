@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using BackendProyectoFinal.DTOs.CartDTO;
+using BackendProyectoFinal.DTOs.Cart;
 
 namespace BackendProyectoFinal.Validators.Cart
 {

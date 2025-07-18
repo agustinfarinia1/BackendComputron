@@ -1,5 +1,5 @@
 ﻿using BackendProyectoFinal.Models;
-using BackendProyectoFinal.DTOs.BrandDTO;
+using BackendProyectoFinal.DTOs.Brand;
 
 namespace BackendProyectoFinal.Mappers
 {

@@ -1,17 +1,23 @@
-﻿using BackendProyectoFinal.Repositories;
-using Microsoft.IdentityModel.Tokens;
+﻿using BackendProyectoFinal.DTOs.ItemCart;
+using BackendProyectoFinal.DTOs.ItemOrder;
+using BackendProyectoFinal.DTOs.OrderStatus;
 using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
-using BackendProyectoFinal.DTOs.OrderStatusDTO;
+using BackendProyectoFinal.Repositories;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BackendProyectoFinal.Services
 {
     public class OrderStatusService : IOrderStatusService
     {
+        private ICommonService<ItemOrderDTO, ItemOrderInsertDTO, ItemOrderUpdateDTO> _itemOrderService;
         private IRepository<OrderStatus> _repository;
         public List<string> Errors { get; }
-        public OrderStatusService(IRepository<OrderStatus> repository)
+        public OrderStatusService(
+            [FromKeyedServices("ItemOrderService")] ICommonService<ItemOrderDTO, ItemOrderInsertDTO, ItemOrderUpdateDTO> itemOrderService,
+        IRepository<OrderStatus> repository)
         {
+            _itemOrderService = itemOrderService;
             _repository = repository;
             Errors = new List<string>();
         }
@@ -19,7 +25,7 @@ namespace BackendProyectoFinal.Services
         public async Task<IEnumerable<OrderStatusDTO>> Get()
         {
             var statuses = await _repository.Get();
-            // CONVIERTE LOS Estados A DTO
+            // Convierte los OrderStatus A DTO
             return statuses.Select(e =>
                 OrderStatusMapper.ConvertirModelToDTO(e));
         }
@@ -54,7 +60,7 @@ namespace BackendProyectoFinal.Services
                 var search = false;
                 for(int i = 0; i> statuses.Count(); i++)
                 {
-                    var previousStatus = statuses.FirstOrDefault(e => e.NextStatusOrderId == lastStatus.Id);
+                    var previousStatus = statuses.FirstOrDefault(e => e.NextOrderStatusId == lastStatus.Id);
                     if(previousStatus == null)
                     {
                         firstStatus = lastStatus;
@@ -76,7 +82,7 @@ namespace BackendProyectoFinal.Services
             var statuses = await Get();
             if (statuses.Any())
             {
-                var lastStatus = statuses.FirstOrDefault(e => e.NextStatusOrderId == null);
+                var lastStatus = statuses.FirstOrDefault(e => e.NextOrderStatusId == null);
                 return lastStatus;
             }
             return null;
@@ -97,19 +103,19 @@ namespace BackendProyectoFinal.Services
             // Si no hay estados, no existe un siguiente
             if (!statuses.Any())
             {
-                orderStatusInsertDTO.NextStatusOrderId = null;
+                orderStatusInsertDTO.NextOrderStatusId = null;
             }
             var newStatus = await AddSimple(orderStatusInsertDTO);
             statuses = await Get();
             if (statuses.Count() >= 2)
             {
                 // Conecta cuando tiene un EstadoSiguienteID
-                if (orderStatusInsertDTO.NextStatusOrderId != null)
+                if (orderStatusInsertDTO.NextOrderStatusId != null)
                 {
-                    var selectedStatus = statuses.FirstOrDefault(e => e.Id == orderStatusInsertDTO.NextStatusOrderId);
+                    var selectedStatus = statuses.FirstOrDefault(e => e.Id == orderStatusInsertDTO.NextOrderStatusId);
                     if (selectedStatus != null)
                     {
-                        var previousStatus = statuses.FirstOrDefault(e2 => e2.NextStatusOrderId == selectedStatus.Id);
+                        var previousStatus = statuses.FirstOrDefault(e2 => e2.NextOrderStatusId == selectedStatus.Id);
                         if (previousStatus != null && previousStatus.Id != newStatus.Id)
                         {
                             var previousStatusDTO = OrderStatusMapper.GenerateOrderStatus(previousStatus.Id, previousStatus.Name, newStatus.Id);
@@ -123,7 +129,7 @@ namespace BackendProyectoFinal.Services
                     var lastStatus = await GetLast();
                     if (lastStatus != null)
                     {
-                        lastStatus.NextStatusOrderId = newStatus.Id;
+                        lastStatus.NextOrderStatusId = newStatus.Id;
                         var lastStatusDTO = OrderStatusMapper.GenerateOrderStatus(lastStatus.Id, lastStatus.Name, newStatus.Id);
                         await Update(lastStatusDTO);
                     }

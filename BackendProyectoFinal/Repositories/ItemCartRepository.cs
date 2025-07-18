@@ -16,9 +16,16 @@ namespace BackendProyectoFinal.Repositories
         public async Task<ItemCart?> GetById(int id)
             => await _context.ItemsCarts.FindAsync(id);
 
-        public async Task<ItemCart?> GetByField(string field)
-            => await _context.ItemsCarts
-                .FirstOrDefaultAsync(i => i.CartID == int.Parse(field));
+        // Retorna todos los ItemCarts de un CartID
+        public async Task<IEnumerable<ItemCart>?> GetByField(string field)
+        {
+            var search = Search(i => i.CartID == int.Parse(field));
+            if (search != null)
+            {
+                return search.ToList();
+            }
+            return null;
+        }
 
         public async Task Add(ItemCart role)
               => await _context.ItemsCarts.AddAsync(role);

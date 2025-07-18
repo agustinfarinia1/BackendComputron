@@ -7,17 +7,17 @@ using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Services;
 // DTOs
-using BackendProyectoFinal.DTOs.RoleDTO;
-using BackendProyectoFinal.DTOs.AddressDTO;
-using BackendProyectoFinal.DTOs.UserDTO;
-using BackendProyectoFinal.DTOs.CategoryDTO;
-using BackendProyectoFinal.DTOs.BrandDTO;
-using BackendProyectoFinal.DTOs.ProductDTO;
-using BackendProyectoFinal.DTOs.CartDTO;
-using BackendProyectoFinal.DTOs.ItemCartDTO;
-using BackendProyectoFinal.DTOs.OrderStatusDTO;
-using BackendProyectoFinal.DTOs.OrderDTO;
-using BackendProyectoFinal.DTOs.ItemOrderDTO;
+using BackendProyectoFinal.DTOs.Role;
+using BackendProyectoFinal.DTOs.Address;
+using BackendProyectoFinal.DTOs.User;
+using BackendProyectoFinal.DTOs.Category;
+using BackendProyectoFinal.DTOs.Brand;
+using BackendProyectoFinal.DTOs.Product;
+using BackendProyectoFinal.DTOs.Cart;
+using BackendProyectoFinal.DTOs.ItemCart;
+using BackendProyectoFinal.DTOs.OrderStatus;
+using BackendProyectoFinal.DTOs.Order;
+using BackendProyectoFinal.DTOs.ItemOrder;
 //Validators
 using BackendProyectoFinal.Validators.Address;
 using BackendProyectoFinal.Validators.Role;
@@ -47,16 +47,18 @@ builder.Services.Configure<EncryptConfiguration>(config =>
 });
 
 // SERVICIOS
+builder.Services.AddKeyedScoped<EncryptService>("EncryptService");
 builder.Services.AddKeyedScoped<ICommonService<CategoryDTO, CategoryInsertDTO, CategoryUpdateDTO>, CategoryService>("CategoryService");
 builder.Services.AddKeyedScoped<ICommonService<RoleDTO, RoleInsertDTO, RoleUpdateDTO>, RoleService>("RoleService");
 builder.Services.AddKeyedScoped<ICommonService<AddressDTO, AddressInsertDTO, AddressUpdateDTO>, AddressService>("AddressService");
 builder.Services.AddKeyedScoped<ICommonService<UserDTO, UserInsertDTO, UserUpdateDTO>, UserService>("UserService");
 builder.Services.AddKeyedScoped<ICommonService<BrandDTO, BrandInsertDTO, BrandUpdateDTO>, BrandService>("BrandService");
 builder.Services.AddKeyedScoped<ICommonService<ProductDTO, ProductInsertDTO, ProductUpdateDTO>, ProductService>("ProductService");
-builder.Services.AddKeyedScoped<ICommonService<CartDTO, CartInsertDTO, CartUpdateDTO>, CartService>("CartService");
+builder.Services.AddKeyedScoped<ICartService, CartService>("CartService");
 builder.Services.AddKeyedScoped<IOrderStatusService, OrderStatusService>("OrderStatusService");
-builder.Services.AddKeyedScoped<ICommonService<OrderDTO, OrderInsertDTO, OrderUpdateDTO>, OrderService>("OrderService");
-builder.Services.AddKeyedScoped<EncryptService>("EncryptService");
+builder.Services.AddKeyedScoped<IOrderService, OrderService>("OrderService");
+builder.Services.AddKeyedScoped<IItemCartService, ItemCartService > ("ItemCartService");
+builder.Services.AddKeyedScoped<ICommonService<ItemOrderDTO, ItemOrderInsertDTO, ItemOrderUpdateDTO>, ItemOrderService>("ItemOrderService");
 
 // REPOSITORY
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
@@ -68,6 +70,8 @@ builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
 builder.Services.AddScoped<IRepository<Cart>, CartRepository>();
 builder.Services.AddScoped<IRepository<OrderStatus>, OrderStatusRepository>();
 builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
+builder.Services.AddScoped<IRepository<ItemCart>, ItemCartRepository>();
+builder.Services.AddScoped<IRepository<ItemOrder>, ItemOrderRepository>();
 
 // ENTITY FRAMEWORK
 builder.Services.AddDbContext<StoreContext>(options =>
@@ -89,12 +93,12 @@ builder.Services.AddScoped<IValidator<ProductInsertDTO>, ProductInsertValidator>
 builder.Services.AddScoped<IValidator<ProductUpdateDTO>, ProductUpdateValidator>();
 builder.Services.AddScoped<IValidator<CartInsertDTO>, CartInsertValidator>();
 builder.Services.AddScoped<IValidator<CartUpdateDTO>, CartUpdateValidator>();
-builder.Services.AddScoped<IValidator<ItemCartInsertDTO>, ItemCartInsertValidator>();
-builder.Services.AddScoped<IValidator<ItemCartUpdateDTO>, ItemCartUpdateValidator>();
 builder.Services.AddScoped<IValidator<OrderStatusInsertDTO>, OrderStatusInsertValidator>();
 builder.Services.AddScoped<IValidator<OrderStatusUpdateDTO>, OrderStatusUpdateValidator>();
 builder.Services.AddScoped<IValidator<OrderInsertDTO>, OrderInsertValidator>();
 builder.Services.AddScoped<IValidator<OrderUpdateDTO>, OrderUpdateValidator>();
+builder.Services.AddScoped<IValidator<ItemCartInsertDTO>, ItemCartInsertValidator>();
+builder.Services.AddScoped<IValidator<ItemCartUpdateDTO>, ItemCartUpdateValidator>();
 builder.Services.AddScoped<IValidator<ItemOrderInsertDTO>, ItemOrderInsertValidator>();
 builder.Services.AddScoped<IValidator<ItemOrderUpdateDTO>, ItemOrderUpdateValidator>();
 

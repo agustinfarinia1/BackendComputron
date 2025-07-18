@@ -1,6 +1,6 @@
 ﻿using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Utils.Mappers;
-using BackendProyectoFinal.DTOs.AddressDTO;
+using BackendProyectoFinal.DTOs.Address;
 using BackendProyectoFinal.Models;
 
 namespace BackendProyectoFinal.Services
@@ -18,7 +18,7 @@ namespace BackendProyectoFinal.Services
         public async Task<IEnumerable<AddressDTO>> Get() 
         {
             var adresses = await _repository.Get();
-            // CONVIERTE LOS Domicilios A DTO
+            // Convierte los Address A DTO
             return adresses.Select(address => 
             AddressMapper.ConvertAddressToDTO(address)
             );

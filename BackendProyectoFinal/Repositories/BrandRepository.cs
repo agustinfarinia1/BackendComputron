@@ -16,9 +16,15 @@ namespace BackendProyectoFinal.Repositories
         public async Task<Brand?> GetById(int id)
             => await _context.Brands.FindAsync(id);
 
-        public async Task<Brand?> GetByField(string field)
-            => await _context.Brands
-                .FirstOrDefaultAsync(m => m.Name == field);
+        public async Task<IEnumerable<Brand>?> GetByField(string field)
+        {
+            var search = Search(b => b.Name == field);
+            if (search != null)
+            {
+                return search.ToList();
+            }
+            return null;
+        } 
 
         public async Task Add(Brand brand)
               => await _context.Brands.AddAsync(brand);

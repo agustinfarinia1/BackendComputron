@@ -18,9 +18,15 @@ namespace BackendProyectoFinal.Repositories
             => await _context.Users
                 .FirstOrDefaultAsync(u => u.UserID == id && u.Eliminated == false);
 
-        public async Task<User?> GetByField(string field)
-            => await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == field && u.Eliminated == false);
+        public async Task<IEnumerable<User>?> GetByField(string field)
+        {
+            var search = Search(u => u.Email == field && u.Eliminated == false);
+            if (search != null)
+            {
+                return search.ToList();
+            }
+            return null;
+        }
 
         public async Task Add(User user)
               => await _context.Users.AddAsync(user);

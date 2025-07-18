@@ -1,5 +1,5 @@
 ﻿using BackendProyectoFinal.Models;
-using BackendProyectoFinal.DTOs.CategoryDTO;
+using BackendProyectoFinal.DTOs.Category;
 
 namespace BackendProyectoFinal.Utils.Mappers
 {

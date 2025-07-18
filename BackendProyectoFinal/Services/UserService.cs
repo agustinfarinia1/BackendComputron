@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using BackendProyectoFinal.Utils.Mappers;
 using BackendProyectoFinal.Models;
-using BackendProyectoFinal.DTOs.UserDTO;
+using BackendProyectoFinal.DTOs.User;
 
 namespace BackendProyectoFinal.Services
 {
@@ -23,9 +23,9 @@ namespace BackendProyectoFinal.Services
         public async Task<IEnumerable<UserDTO>> Get()
         {
             var categorias = await _repository.Get();
-            // CONVIERTE LOS Usuarios A DTO
+            // Convierte los Users A DTO
             return categorias.Select(u =>
-            UserMapper.ConvertUserToDTO(u)
+                UserMapper.ConvertUserToDTO(u)
             );
         }
 

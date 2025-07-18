@@ -9,8 +9,8 @@ namespace BackendProyectoFinal.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderStatusID { get; set; }
         public string Name { get; set; }
-        public int? NextStatusOrderID { get; set; }
-        [ForeignKey("NextStatusOrderID")]
+        public int? NextOrderStatusID { get; set; }
+        [ForeignKey("NextOrderStatusID")]
         public virtual OrderStatus? NextStatus { get; set; }
     }
 }

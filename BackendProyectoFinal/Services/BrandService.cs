@@ -1,7 +1,7 @@
 ﻿using BackendProyectoFinal.Repositories;
 using Microsoft.IdentityModel.Tokens;
 using BackendProyectoFinal.Mappers;
-using BackendProyectoFinal.DTOs.BrandDTO;
+using BackendProyectoFinal.DTOs.Brand;
 using BackendProyectoFinal.Models;
 
 namespace BackendProyectoFinal.Services
@@ -19,7 +19,7 @@ namespace BackendProyectoFinal.Services
         public async Task<IEnumerable<BrandDTO>> Get()
         {
             var marcas = await _repository.Get();
-            // CONVIERTE LOS ROLES A DTO
+            // Convierte las Brands A DTO
             return marcas.Select(brand 
                 => BrandMapper.ConvertBrandToDTO(brand)
             );

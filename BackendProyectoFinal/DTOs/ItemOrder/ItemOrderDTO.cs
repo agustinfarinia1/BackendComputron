@@ -1,4 +1,4 @@
-﻿namespace BackendProyectoFinal.DTOs.ItemOrderDTO
+﻿namespace BackendProyectoFinal.DTOs.ItemOrder
 {
     public class ItemOrderDTO
     {

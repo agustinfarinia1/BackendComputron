@@ -1,7 +1,7 @@
-﻿using BackendProyectoFinal.DTOs.OrderDTO;
-using BackendProyectoFinal.Services;
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using BackendProyectoFinal.DTOs.Order;
+using BackendProyectoFinal.Services;
 
 namespace BackendProyectoFinal.Controllers
 {
@@ -9,12 +9,12 @@ namespace BackendProyectoFinal.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private ICommonService<OrderDTO, OrderInsertDTO, OrderUpdateDTO> _orderService;
+        private IOrderService _orderService;
         private IValidator<OrderInsertDTO> _orderInsertValidator;
         private IValidator<OrderUpdateDTO> _orderUpdateValidator;
 
         public OrderController(
-            [FromKeyedServices("OrderService")] ICommonService<OrderDTO, OrderInsertDTO, OrderUpdateDTO> pedidoService,
+            [FromKeyedServices("OrderService")] IOrderService pedidoService,
             IValidator<OrderInsertDTO> orderInsertValidator,
             IValidator<OrderUpdateDTO> orderUpdateValidator)
         {

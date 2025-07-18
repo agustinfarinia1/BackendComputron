@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
-using BackendProyectoFinal.DTOs.ProductDTO;
+using BackendProyectoFinal.DTOs.Product;
 
 namespace BackendProyectoFinal.Services
 {
@@ -20,7 +20,7 @@ namespace BackendProyectoFinal.Services
         public async Task<IEnumerable<ProductDTO>> Get()
         {
             var products = await _repository.Get();
-            // CONVIERTE LOS Usuarios A DTO
+            // Convierte los Products A DTO
             return products.Where(p => p.Eliminated == false) // 🔍 Filtra los que no están eliminados
                 .Select(p =>
                     ProductMapper.ConvertProductToDTO(p));

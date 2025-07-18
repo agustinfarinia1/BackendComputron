@@ -1,12 +1,12 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using BackendProyectoFinal.DTOs.OrderDTO;
+using BackendProyectoFinal.DTOs.Order;
 using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 
 namespace BackendProyectoFinal.Services
 {
-    public class OrderService : ICommonService<OrderDTO, OrderInsertDTO, OrderUpdateDTO>
+    public class OrderService : IOrderService
     {
         private IOrderStatusService _orderStatusService;
         private IRepository<Order> _repository;
@@ -23,7 +23,7 @@ namespace BackendProyectoFinal.Services
         public async Task<IEnumerable<OrderDTO>> Get()
         {
             var orders = await _repository.Get();
-            // CONVIERTE LOS Estados de Pedidos A DTO
+            // Convierte los Orders A DTO
             return orders.Select(o
                 => OrderMapper.ConvertOrderToDTO(o));
         }
@@ -48,8 +48,10 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
+        // Inicializacion del Order, todas las operaciones con la listOrder se hacen dentro de ItemOrder
         public async Task<OrderDTO> Add(OrderInsertDTO orderInsertDTO)
         {
+            // Obtiene el estado inicial del OrderStatusService
             var orderStatus = _orderStatusService.GetFirst();
             orderInsertDTO.OrderStatusId = orderStatus.Id;
             var order = OrderMapper.ConvertDTOToModel(orderInsertDTO);
@@ -73,6 +75,22 @@ namespace BackendProyectoFinal.Services
             }
             return null;
         }
+
+        public void AddItemOrder(int orderID, int userID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateItemOrder(int orderID, int userID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveItemOrder(int orderID, int userID)
+        {
+            throw new NotImplementedException();
+        }
+
 
         public async Task<OrderDTO?> Delete(int id)
         {

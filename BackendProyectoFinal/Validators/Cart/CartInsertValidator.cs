@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs.CartDTO;
+﻿using BackendProyectoFinal.DTOs.Cart;
 using FluentValidation;
 
 namespace BackendProyectoFinal.Validators.Cart

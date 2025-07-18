@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs.OrderDTO;
+﻿using BackendProyectoFinal.DTOs.Order;
 using BackendProyectoFinal.Models;
 
 namespace BackendProyectoFinal.Mappers
@@ -11,8 +11,8 @@ namespace BackendProyectoFinal.Mappers
             {
                 Id = order.OrderID,
                 UserId = order.UserID,
-                ListOrders = order.ListOrders,
-                AddressId = order.AddressID
+                AddressId = order.AddressID,
+                OrderStatusId = order.OrderStatusID
             };
             return orderDTO;
         }
@@ -22,8 +22,9 @@ namespace BackendProyectoFinal.Mappers
             var order = new Order()
             {
                 UserID = orderDTO.UserId,
-                ListOrders = orderDTO.ListOrders,
+                ListOrders = new List<ItemOrder>(),
                 AddressID = orderDTO.AddressId,
+                OrderID = orderDTO.OrderStatusId
             };
             return order;
         }
@@ -35,15 +36,12 @@ namespace BackendProyectoFinal.Mappers
 
             if (orderDTO.UserId > 0)
                 order.UserID = orderDTO.UserId;
-
-            if (orderDTO.ListOrders.Count() > 0)
-            {
-                order.ListOrders = orderDTO.ListOrders;
-            }
+            
             if (orderDTO.AddressId > 0)
-            {
                 order.AddressID = orderDTO.AddressId;
-            }
+            
+            if (orderDTO.OrderStatusId > 0)
+                order.OrderID = orderDTO.OrderStatusId;
         }
     }
 }

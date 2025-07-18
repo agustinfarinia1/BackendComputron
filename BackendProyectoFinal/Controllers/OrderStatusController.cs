@@ -2,7 +2,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using BackendProyectoFinal.Services;
-using BackendProyectoFinal.DTOs.OrderStatusDTO;
+using BackendProyectoFinal.DTOs.OrderStatus;
 
 namespace BackendProyectoFinal.Controllers
 {

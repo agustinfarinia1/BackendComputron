@@ -16,9 +16,15 @@ namespace BackendProyectoFinal.Repositories
         public async Task<Category?> GetById(int id)
             => await _context.Categories.FindAsync(id);
 
-        public async Task<Category?> GetByField(string field)
-            => await _context.Categories
-                .FirstOrDefaultAsync(c => c.Name == field);
+        public async Task<IEnumerable<Category>?> GetByField(string field)
+        {
+            var search = Search(c => c.Name == field);
+            if (search != null)
+            {
+                return search.ToList();
+            }
+            return null;
+        }
 
         public async Task Add(Category category)
               => await _context.Categories.AddAsync(category);
