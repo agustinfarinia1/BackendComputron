@@ -1,18 +1,19 @@
-﻿using BackendProyectoFinal.DTOs.Cart;
+﻿using BackendProyectoFinal.Repositories;
+using Microsoft.IdentityModel.Tokens;
 using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
-using BackendProyectoFinal.Repositories;
-using Microsoft.IdentityModel.Tokens;
+using BackendProyectoFinal.DTOs.Cart;
+using BackendProyectoFinal.DTOs.ItemCart;
 
 namespace BackendProyectoFinal.Services
 {
-    public class CartService : ICartService
+    public class CartService : IListService<CartDTO, CartInsertDTO, CartUpdateDTO>
     {
-        private IItemCartService _itemCartService;
+        private IItemListService<ItemCartDTO,ItemCartInsertDTO,ItemCartUpdateDTO> _itemCartService;
         private IRepository<Cart> _repository;
         public List<string> Errors { get; }
         public CartService(
-            [FromKeyedServices("ItemCartService")] IItemCartService itemCartService,
+            [FromKeyedServices("ItemCartService")] IItemListService<ItemCartDTO, ItemCartInsertDTO, ItemCartUpdateDTO> itemCartService,
             IRepository<Cart> repository)
         {
             _itemCartService = itemCartService;
@@ -29,7 +30,7 @@ namespace BackendProyectoFinal.Services
             foreach (var cartDTO in cartsDTO)
             {
                 // Lista de ItemCart ligada a Cart
-                var listCartDTO = await _itemCartService.GetItemCartByCartId(cartDTO.Id);
+                var listCartDTO = await _itemCartService.GetItemByListId(cartDTO.Id);
                 if(listCartDTO != null && listCartDTO.Count() > 0)
                 {
                     CartMapper.UpdateCart(cartDTO, listCartDTO.ToList());
@@ -38,13 +39,13 @@ namespace BackendProyectoFinal.Services
             return cartsDTO;
         }
 
-        public async Task<CartDTO?> GetById(int idCart)
+        public async Task<CartDTO?> GetById(int cartId)
         {
-            var cart = await _repository.GetById(idCart);
+            var cart = await _repository.GetById(cartId);
             if (cart != null)
             {
                 var cartDTO = CartMapper.ConvertCartToDTO(cart);
-                var listCartDTO = await _itemCartService.GetItemCartByCartId(cartDTO.Id);
+                var listCartDTO = await _itemCartService.GetItemByListId(cartDTO.Id);
                 if(listCartDTO != null)
                     CartMapper.UpdateCart(cartDTO, listCartDTO.ToList());
                 return cartDTO;
@@ -60,7 +61,7 @@ namespace BackendProyectoFinal.Services
             {
                 var cartDTO = CartMapper.ConvertCartToDTO(cart);
 
-                var listCartDTO = await _itemCartService.GetItemCartByCartId(cartDTO.Id);
+                var listCartDTO = await _itemCartService.GetItemByListId(cartDTO.Id);
                 if (listCartDTO != null)
                     CartMapper.UpdateCart(cartDTO, listCartDTO.ToList());
                 return cartDTO;
@@ -126,7 +127,7 @@ namespace BackendProyectoFinal.Services
             return Errors.IsNullOrEmpty() == true ? true : false;
         }
 
-        public void EmptyCart(int cartID, int userID)
+        public void EmptyList(int listID, int userID)
         {
             throw new NotImplementedException();
         }

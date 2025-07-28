@@ -1,6 +1,6 @@
-﻿using BackendProyectoFinal.Models;
-using BackendProyectoFinal.DTOs.Cart;
+﻿using BackendProyectoFinal.DTOs.Cart;
 using BackendProyectoFinal.DTOs.ItemCart;
+using BackendProyectoFinal.Models;
 
 namespace BackendProyectoFinal.Mappers
 {
@@ -26,7 +26,7 @@ namespace BackendProyectoFinal.Mappers
             return cart;
         }
 
-        public static void UpdateCart(CartDTO cartDTO,List<ItemCartDTO> listCart)
+        public static void UpdateCart(CartDTO cartDTO, List<ItemCartDTO> listCart)
         {
             if (listCart.Count() > 0)
                 cartDTO.ListCarts = listCart;

@@ -21,7 +21,7 @@ namespace BackendProyectoFinal.Services
         {
             var products = await _repository.Get();
             // Convierte los Products A DTO
-            return products.Where(p => p.Eliminated == false) // 🔍 Filtra los que no están eliminados
+            return products.Where(p => p.Eliminated == false)
                 .Select(p =>
                     ProductMapper.ConvertProductToDTO(p));
         }

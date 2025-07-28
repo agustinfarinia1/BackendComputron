@@ -1,23 +1,17 @@
-﻿using BackendProyectoFinal.DTOs.ItemCart;
-using BackendProyectoFinal.DTOs.ItemOrder;
-using BackendProyectoFinal.DTOs.OrderStatus;
+﻿using BackendProyectoFinal.Repositories;
+using Microsoft.IdentityModel.Tokens;
 using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
-using BackendProyectoFinal.Repositories;
-using Microsoft.IdentityModel.Tokens;
+using BackendProyectoFinal.DTOs.OrderStatus;
 
 namespace BackendProyectoFinal.Services
 {
     public class OrderStatusService : IOrderStatusService
     {
-        private ICommonService<ItemOrderDTO, ItemOrderInsertDTO, ItemOrderUpdateDTO> _itemOrderService;
         private IRepository<OrderStatus> _repository;
         public List<string> Errors { get; }
-        public OrderStatusService(
-            [FromKeyedServices("ItemOrderService")] ICommonService<ItemOrderDTO, ItemOrderInsertDTO, ItemOrderUpdateDTO> itemOrderService,
-        IRepository<OrderStatus> repository)
+        public OrderStatusService(IRepository<OrderStatus> repository)
         {
-            _itemOrderService = itemOrderService;
             _repository = repository;
             Errors = new List<string>();
         }
@@ -50,34 +44,35 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
-        public async Task<OrderStatusDTO?> GetFirst()
+        public async Task<OrderStatusDTO?> GetFirstOrderStatus()
         {
             var statuses = await Get();
-            var lastStatus = await GetLast();
-            var firstStatus = lastStatus;
-            if (statuses.Any() && lastStatus != null)
+            var current = await GetLastOrderStatus();
+
+            if (!statuses.Any() || current == null)
+                return null;
+
+            while (true)
             {
-                var search = false;
-                for(int i = 0; i> statuses.Count(); i++)
-                {
-                    var previousStatus = statuses.FirstOrDefault(e => e.NextOrderStatusId == lastStatus.Id);
-                    if(previousStatus == null)
-                    {
-                        firstStatus = lastStatus;
-                        search = true;
-                        break;
-                    }
-                    lastStatus = previousStatus;
-                }
-                if (search)
-                {
-                    return firstStatus;
-                }
+                var previous = statuses.FirstOrDefault(s => s.NextOrderStatusId == current.Id);
+                if (previous == null)
+                    return current;
+                current = previous;
+            }
+        }
+
+        public async Task<OrderStatusDTO?> GetNextOrderStatus(int orderStatusID)
+        {
+            var status = await GetById(orderStatusID);
+            if (status != null && status.NextOrderStatusId.HasValue)
+            {
+                var nextStatus = await GetById(status.NextOrderStatusId.Value);
+                return nextStatus;
             }
             return null;
         }
 
-        public async Task<OrderStatusDTO?> GetLast()
+        public async Task<OrderStatusDTO?> GetLastOrderStatus()
         {
             var statuses = await Get();
             if (statuses.Any())
@@ -126,7 +121,7 @@ namespace BackendProyectoFinal.Services
                 // Conecta cuando el estado es el ultimo
                 else
                 {
-                    var lastStatus = await GetLast();
+                    var lastStatus = await GetLastOrderStatus();
                     if (lastStatus != null)
                     {
                         lastStatus.NextOrderStatusId = newStatus.Id;

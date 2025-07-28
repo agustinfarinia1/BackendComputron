@@ -1,6 +1,6 @@
 USE ProyectoBackendUTN;
 CREATE DATABASE ProyectoBackendUTN;
--- Se realizaron las tablas con una migracion
+-- Se realizaron las tablas con migraciones
 -- Las tablas estan realizadas en base a los Models
 -- Porque el context esta en base a eso
 
@@ -33,6 +33,7 @@ CREATE TABLE Users(
 	FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID),
 	FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
 );
+--Delete From Users Where UserID = 2;
 
 CREATE TABLE Categories(
 	CategoryID int IDENTITY,
@@ -89,6 +90,7 @@ CREATE TABLE Orders(
 	FOREIGN KEY (OrderStatusID) REFERENCES OrderStatuses(OrderStatusID),
 	FOREIGN KEY (AdressID) REFERENCES Adresses(AdressID)
 );
+--Delete From Orders Where OrderID = 2;
 
 CREATE TABLE ItemsOrders(
 	ItemOrderID int IDENTITY,
@@ -99,16 +101,14 @@ CREATE TABLE ItemsOrders(
 	FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
 	FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
-
+--Delete From OrderStatuses Where OrderStatusID = 1;
 
 select * from Roles;
 select * from Addresses;
 select * from Users;
 
---Delete From Users Where UserID = 2;
-
 -- Inner Join con informacion general de Usuario y sus tablas foraneas
-Select U.UserID,U.Email,U.Password,U.FirstName,U.SurName,U.DateOfBirth,D.Name,D.Number,D.Floor,D.ApartmentNumber,R.RoleID,R.Name 
+Select U.UserID,U.Email,U.Password,U.FirstName,U.SurName,U.DateOfBirth,D.AddressID,D.Name,D.Number,D.Floor,D.ApartmentNumber,R.RoleID,R.Name 
 From Users as U
 Inner Join Roles as R
 On U.RoleID = R.RoleID
@@ -130,7 +130,7 @@ Inner Join Categories as C
 On P.CategoryID = C.CategoryID;
 
 select * from OrderStatuses
-Order by NextStatusOrderID;
+Order by NextOrderStatusID;
 
 --Order
 Select * from Orders;
@@ -138,7 +138,7 @@ Select * from ItemsOrders;
 Select * from OrderStatuses;
 
 -- Inner Join que muestra todos los productos que estan dentro del Pedido y sus datos
-Select O.OrderID,O.AddressID,IO.ItemOrderID,IO.ProductID,P.Title,P.Price,P.Quantity,P.CreationDate,B.BrandID,B.Name,IO.Quantity,OS.OrderStatusID,OS.Name
+Select O.OrderID,O.AddressID,IO.ItemOrderID,IO.ProductID,P.Title,P.Price,P.Quantity,P.CreationDate,B.BrandID,B.Name,IO.Quantity,OS.OrderStatusID,OS.Name,O.Canceled
 from Orders as O
 Inner Join OrderStatuses as OS
 On O.OrderStatusID = OS.OrderStatusID

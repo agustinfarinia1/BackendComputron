@@ -15,7 +15,6 @@ namespace BackendProyectoFinal.Validators.Product
             RuleFor(x => x.Quantity).NotEmpty().WithMessage("La cantidad es obligatoria");
             RuleFor(x => x.Quantity).GreaterThanOrEqualTo(1).WithMessage("La cantidad debe ser mayor a cero");
             RuleFor(x => x.Image).NotEmpty().WithMessage("La imagen es obligatoria");
-            RuleFor(x => x.CreationDate).NotEmpty().WithMessage("La fecha de creacion es obligatoria");
             RuleFor(x => x.CategoryId).NotEmpty().WithMessage("La categiria de producto es obligatoria");
             RuleFor(x => x.MLCode).NotEmpty().WithMessage("El codigo de Mercado Libre es obligatorio");
             RuleFor(x => x.Eliminated).NotNull().WithMessage("El Producto debe tener estado");

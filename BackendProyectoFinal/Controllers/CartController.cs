@@ -9,12 +9,12 @@ namespace BackendProyectoFinal.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        private ICartService _cartService;
+        private IListService<CartDTO,CartInsertDTO,CartUpdateDTO> _cartService;
         private IValidator<CartInsertDTO> _cartInsertValidator;
         private IValidator<CartUpdateDTO> _cartUpdateValidator;
 
         public CartController(
-            [FromKeyedServices("CartService")] ICartService cartService,
+            [FromKeyedServices("CartService")] IListService<CartDTO, CartInsertDTO, CartUpdateDTO> cartService,
             IValidator<CartInsertDTO> cartInsertValidator,
             IValidator<CartUpdateDTO> cartUpdateValidator)
         {

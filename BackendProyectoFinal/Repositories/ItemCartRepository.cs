@@ -27,18 +27,18 @@ namespace BackendProyectoFinal.Repositories
             return null;
         }
 
-        public async Task Add(ItemCart role)
-              => await _context.ItemsCarts.AddAsync(role);
+        public async Task Add(ItemCart itemCart)
+              => await _context.ItemsCarts.AddAsync(itemCart);
 
-        public void Update(ItemCart role)
+        public void Update(ItemCart itemCart)
         {
-            _context.ItemsCarts.Attach(role);
-            _context.ItemsCarts.Entry(role).State = EntityState.Modified;
+            _context.ItemsCarts.Attach(itemCart);
+            _context.ItemsCarts.Entry(itemCart).State = EntityState.Modified;
             // AVISA A ENTITY FRAMEWORK QUE FUE MODIFICADO, PARA PODER REALIZAR EL SAVE
         }
 
-        public void Delete(ItemCart role)
-            => _context.ItemsCarts.Remove(role);
+        public void Delete(ItemCart itemCart)
+            => _context.ItemsCarts.Remove(itemCart);
 
         public async Task Save()
         {

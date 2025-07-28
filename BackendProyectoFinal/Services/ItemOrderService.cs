@@ -1,13 +1,12 @@
-﻿using BackendProyectoFinal.DTOs.ItemOrder;
+﻿using BackendProyectoFinal.Repositories;
+using Microsoft.IdentityModel.Tokens;
 using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
-using BackendProyectoFinal.Repositories;
-using BackendProyectoFinal.Utils.Mappers;
-using Microsoft.IdentityModel.Tokens;
+using BackendProyectoFinal.DTOs.ItemOrder;
 
 namespace BackendProyectoFinal.Services
 {
-    public class ItemOrderService : ICommonService<ItemOrderDTO, ItemOrderInsertDTO, ItemOrderUpdateDTO>
+    public class ItemOrderService : IItemListService<ItemOrderDTO, ItemOrderInsertDTO, ItemOrderUpdateDTO>
     {
         private IRepository<ItemOrder> _repository;
         public List<string> Errors { get; }
@@ -26,16 +25,17 @@ namespace BackendProyectoFinal.Services
             );
         }
 
-        public async Task<ItemOrderDTO?> GetById(int id)
+        public async Task<ItemOrderDTO?> GetById(int orderId)
         {
-            var itemOrder = await _repository.GetById(id);
-            if (itemOrder != null)
+            var itemsOrder = await _repository.GetById(orderId);
+            if (itemsOrder != null)
             {
-                return ItemOrderMapper.ConvertItemOrderToDTO(itemOrder);
+                return ItemOrderMapper.ConvertItemOrderToDTO(itemsOrder);
             }
             return null;
         }
 
+        // Podria buscarse por UserID pero necesitaria el OrderService
         public async Task<ItemOrderDTO?> GetByField(string field)
         {
             var itemOrder = _repository.Search(i => i.OrderID == int.Parse(field)).FirstOrDefault();
@@ -46,21 +46,32 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
-        public async Task<ItemOrderDTO> Add(ItemOrderInsertDTO ItemOrderInsertDTO)
+        public async Task<IEnumerable<ItemOrderDTO>?> GetItemByListId(int orderId)
         {
-            var itemOrder = ItemOrderMapper.ConvertDTOToModel(ItemOrderInsertDTO);
+            var itemOrders = _repository.Search(i => i.OrderID == orderId);
+            if (itemOrders != null)
+            {
+                return itemOrders.Select(item =>
+                    ItemOrderMapper.ConvertItemOrderToDTO(item)).ToList();
+            }
+            return null;
+        }
+
+        public async Task<ItemOrderDTO> Add(ItemOrderInsertDTO ItemOrderDTO)
+        {
+            var itemOrder = ItemOrderMapper.ConvertDTOToModel(ItemOrderDTO);
             await _repository.Add(itemOrder);
             await _repository.Save();
 
             return ItemOrderMapper.ConvertItemOrderToDTO(itemOrder);
         }
 
-        public async Task<ItemOrderDTO?> Update(ItemOrderUpdateDTO itemOrderUpdateDTO)
+        public async Task<ItemOrderDTO?> Update(ItemOrderUpdateDTO itemOrderDTO)
         {
-            var itemOrder = await _repository.GetById(itemOrderUpdateDTO.Id);
+            var itemOrder = await _repository.GetById(itemOrderDTO.Id);
             if (itemOrder != null)
             {
-                ItemOrderMapper.UpdateItemOrder(itemOrder, itemOrderUpdateDTO);
+                ItemOrderMapper.UpdateItemOrder(itemOrder, itemOrderDTO);
 
                 _repository.Update(itemOrder);
                 await _repository.Save();
@@ -75,11 +86,11 @@ namespace BackendProyectoFinal.Services
             var itemOrder = await _repository.GetById(id);
             if (itemOrder != null)
             {
-                var itemOrderDTO = ItemOrderMapper.ConvertItemOrderToDTO(itemOrder);
+                var itemCartDTO = ItemOrderMapper.ConvertItemOrderToDTO(itemOrder);
 
                 _repository.Delete(itemOrder);
                 await _repository.Save();
-                return itemOrderDTO;
+                return itemCartDTO;
             }
             return null;
         }
@@ -102,6 +113,11 @@ namespace BackendProyectoFinal.Services
                 Errors.Add("No puede existir un Item Order que sea negativo");
             }
             return Errors.IsNullOrEmpty() == true ? true : false;
+        }
+
+        public void EmptyList(int listID)
+        {
+            throw new NotImplementedException();
         }
     }
 }

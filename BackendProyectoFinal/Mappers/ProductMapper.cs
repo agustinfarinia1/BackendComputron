@@ -16,7 +16,7 @@ namespace BackendProyectoFinal.Mappers
                 Price = productDTO.Price,
                 Quantity = productDTO.Quantity,
                 Image = productDTO.Image,
-                CreationDate = productDTO.CreationDate,
+                CreationDate = DateOnly.FromDateTime(DateTime.Now),
                 CategoryID = productDTO.CategoryId,
                 Eliminated = false
             };

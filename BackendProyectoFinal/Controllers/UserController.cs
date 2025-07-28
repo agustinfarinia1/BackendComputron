@@ -11,13 +11,13 @@ namespace BackendProyectoFinal.Controllers
     public class UserController : ControllerBase
     {
         private ICommonService<UserDTO, UserInsertDTO, UserUpdateDTO> _userService;
-        private ICartService _cartService;
+        private IListService<CartDTO,CartInsertDTO,CartUpdateDTO> _cartService;
         private IValidator<UserInsertDTO> _userInsertValidator;
         private IValidator<UserUpdateDTO> _userUpdateValidator;
 
         public UserController(
             [FromKeyedServices("UserService")] ICommonService<UserDTO, UserInsertDTO, UserUpdateDTO> usuarioService,
-            [FromKeyedServices("CartService")] ICartService cartService,
+            [FromKeyedServices("CartService")] IListService<CartDTO, CartInsertDTO, CartUpdateDTO> cartService,
             IValidator<UserInsertDTO> userInsertValidator,
             IValidator<UserUpdateDTO> userUpdateValidator)
         {

@@ -54,11 +54,11 @@ builder.Services.AddKeyedScoped<ICommonService<AddressDTO, AddressInsertDTO, Add
 builder.Services.AddKeyedScoped<ICommonService<UserDTO, UserInsertDTO, UserUpdateDTO>, UserService>("UserService");
 builder.Services.AddKeyedScoped<ICommonService<BrandDTO, BrandInsertDTO, BrandUpdateDTO>, BrandService>("BrandService");
 builder.Services.AddKeyedScoped<ICommonService<ProductDTO, ProductInsertDTO, ProductUpdateDTO>, ProductService>("ProductService");
-builder.Services.AddKeyedScoped<ICartService, CartService>("CartService");
+builder.Services.AddKeyedScoped<IListService<CartDTO, CartInsertDTO, CartUpdateDTO>, CartService>("CartService");
+builder.Services.AddKeyedScoped<IItemListService<ItemCartDTO,ItemCartInsertDTO,ItemCartUpdateDTO>, ItemCartService > ("ItemCartService");
 builder.Services.AddKeyedScoped<IOrderStatusService, OrderStatusService>("OrderStatusService");
-builder.Services.AddKeyedScoped<IOrderService, OrderService>("OrderService");
-builder.Services.AddKeyedScoped<IItemCartService, ItemCartService > ("ItemCartService");
-builder.Services.AddKeyedScoped<ICommonService<ItemOrderDTO, ItemOrderInsertDTO, ItemOrderUpdateDTO>, ItemOrderService>("ItemOrderService");
+builder.Services.AddKeyedScoped<IListService<OrderDTO, OrderInsertDTO, OrderUpdateDTO>, OrderService>("OrderService");
+builder.Services.AddKeyedScoped<IItemListService<ItemOrderDTO, ItemOrderInsertDTO, ItemOrderUpdateDTO>, ItemOrderService>("ItemOrderService");
 
 // REPOSITORY
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();

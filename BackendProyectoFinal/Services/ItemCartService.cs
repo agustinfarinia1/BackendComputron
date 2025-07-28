@@ -6,7 +6,7 @@ using BackendProyectoFinal.DTOs.ItemCart;
 
 namespace BackendProyectoFinal.Services
 {
-    public class ItemCartService : IItemCartService
+    public class ItemCartService : IItemListService <ItemCartDTO,ItemCartInsertDTO,ItemCartUpdateDTO>
     {
         private IRepository<ItemCart> _repository;
         public List<string> Errors { get; }
@@ -25,9 +25,9 @@ namespace BackendProyectoFinal.Services
             );
         }
 
-        public async Task<ItemCartDTO?> GetById(int idCart)
+        public async Task<ItemCartDTO?> GetById(int cartId)
         {
-            var itemsCart = await _repository.GetById(idCart);
+            var itemsCart = await _repository.GetById(cartId);
             if (itemsCart != null)
             {
                 return ItemCartMapper.ConvertItemCartToDTO(itemsCart);
@@ -46,7 +46,7 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
-        public async Task<IEnumerable<ItemCartDTO>?> GetItemCartByCartId(int cartId)
+        public async Task<IEnumerable<ItemCartDTO>?> GetItemByListId(int cartId)
         {
             var itemCarts = _repository.Search(i => i.CartID == cartId);
             if (itemCarts != null)
@@ -113,6 +113,11 @@ namespace BackendProyectoFinal.Services
                 Errors.Add("No puede existir un Item Cart que sea negativo");
             }
             return Errors.IsNullOrEmpty() == true ? true : false;
+        }
+
+        public void EmptyList(int listID)
+        {
+            throw new NotImplementedException();
         }
     }
 }

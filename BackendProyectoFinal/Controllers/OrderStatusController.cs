@@ -15,11 +15,11 @@ namespace BackendProyectoFinal.Controllers
         private IValidator<OrderStatusUpdateDTO> _orderStatusUpdateValidator;
 
         public OrderStatusController(
-            [FromKeyedServices("OrderStatusService")] IOrderStatusService estadoPedidoService,
+            [FromKeyedServices("OrderStatusService")] IOrderStatusService orderStatusService,
             IValidator<OrderStatusInsertDTO> orderStatusInsertValidator,
             IValidator<OrderStatusUpdateDTO> orderStatusUpdateValidator)
         {
-            _orderStatusService = estadoPedidoService;
+            _orderStatusService = orderStatusService;
             _orderStatusInsertValidator = orderStatusInsertValidator;
             _orderStatusUpdateValidator = orderStatusUpdateValidator;
         }
@@ -31,21 +31,28 @@ namespace BackendProyectoFinal.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderStatusDTO>> GetById(int id)
         {
-            var estadoPedido = await _orderStatusService.GetById(id);
-            return estadoPedido == null ? NotFound() : Ok(estadoPedido);
+            var orderStatus = await _orderStatusService.GetById(id);
+            return orderStatus == null ? NotFound() : Ok(orderStatus);
         }
 
         [HttpGet("first")]
         public async Task<ActionResult<OrderStatusDTO>> GetFirstOrderStatus()
         {
-            var firstStatus = await _orderStatusService.GetFirst();
+            var firstStatus = await _orderStatusService.GetFirstOrderStatus();
             return firstStatus == null ? NotFound() : Ok(firstStatus);
         }
 
-        [HttpGet("/last")]
+        [HttpGet("next/{orderStatusID}")]
+        public async Task<ActionResult<OrderStatusDTO>> GetNextOrderStatus(int orderStatusID)
+        {
+            var nextStatus = await _orderStatusService.GetNextOrderStatus(orderStatusID);
+            return nextStatus == null ? NotFound() : Ok(nextStatus);
+        }
+
+        [HttpGet("last")]
         public async Task<ActionResult<OrderStatusDTO>> GetLastOrderStatus()
         {
-            var lastStatus = await _orderStatusService.GetLast();
+            var lastStatus = await _orderStatusService.GetLastOrderStatus();
             return lastStatus == null ? NotFound() : Ok(lastStatus);
         }
 

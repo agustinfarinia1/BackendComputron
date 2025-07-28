@@ -14,7 +14,8 @@ namespace BackendProyectoFinal.Repositories
             => await _context.OrderStatuses.ToListAsync();
 
         public async Task<OrderStatus?> GetById(int id)
-            => await _context.OrderStatuses.FindAsync(id);
+             => await _context.OrderStatuses.FindAsync(id);
+
 
         public async Task<IEnumerable<OrderStatus>?> GetByField(string field)
         {

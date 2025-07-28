@@ -9,6 +9,7 @@ namespace BackendProyectoFinal.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderID { get; set; }
         public List<ItemOrder> ListOrders { get; set; }
+        public DateOnly CreationDate { get; set; }
         public int UserID { get; set; }
         [ForeignKey("UserID")]
         public virtual User User { get; set; }
@@ -18,6 +19,7 @@ namespace BackendProyectoFinal.Models
         public int AddressID { get; set; }
         [ForeignKey("AddressID")]
         public virtual Address Address { get; set; }
+        public bool Canceled { get; set; }
 
         public Order()
         {

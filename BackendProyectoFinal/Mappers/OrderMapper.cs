@@ -10,9 +10,11 @@ namespace BackendProyectoFinal.Mappers
             var orderDTO = new OrderDTO()
             {
                 Id = order.OrderID,
+                CreationDate = order.CreationDate,
                 UserId = order.UserID,
                 AddressId = order.AddressID,
-                OrderStatusId = order.OrderStatusID
+                OrderStatusId = order.OrderStatusID,
+                Canceled = order.Canceled
             };
             return orderDTO;
         }
@@ -21,27 +23,23 @@ namespace BackendProyectoFinal.Mappers
         {
             var order = new Order()
             {
+                CreationDate = DateOnly.FromDateTime(DateTime.Now),
                 UserID = orderDTO.UserId,
                 ListOrders = new List<ItemOrder>(),
                 AddressID = orderDTO.AddressId,
-                OrderID = orderDTO.OrderStatusId
+                OrderStatusID = orderDTO.OrderStatusId,
+                Canceled = false
             };
             return order;
         }
 
-        public static void UpdateOrder(Order order, OrderUpdateDTO orderDTO)
+        public static void UpdateOrder(OrderDTO orderDTO, OrderUpdateDTO orderUpdateDTO)
         {
-            if (orderDTO.Id > 0)
-                order.OrderID = orderDTO.Id;
+            if (orderUpdateDTO.OrderStatusId > 0)
+                orderDTO.OrderStatusId = orderUpdateDTO.OrderStatusId;
 
-            if (orderDTO.UserId > 0)
-                order.UserID = orderDTO.UserId;
-            
-            if (orderDTO.AddressId > 0)
-                order.AddressID = orderDTO.AddressId;
-            
-            if (orderDTO.OrderStatusId > 0)
-                order.OrderID = orderDTO.OrderStatusId;
+            if (orderUpdateDTO.Canceled != orderDTO.Canceled)
+                orderDTO.Canceled = orderUpdateDTO.Canceled;
         }
     }
 }

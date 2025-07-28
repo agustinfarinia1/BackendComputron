@@ -7,7 +7,6 @@
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public string Image { get; set; }
-        public DateOnly CreationDate { get; set; }
         public bool Eliminated { get; set; }
         public int BrandId { get; set; }
         public int CategoryId { get; set; }

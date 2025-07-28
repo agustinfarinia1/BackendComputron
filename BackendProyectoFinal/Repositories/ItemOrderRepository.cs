@@ -16,6 +16,7 @@ namespace BackendProyectoFinal.Repositories
         public async Task<ItemOrder?> GetById(int id)
             => await _context.ItemsOrders.FindAsync(id);
 
+        // Retorna todos los ItemCarts de un CartID
         public async Task<IEnumerable<ItemOrder>?> GetByField(string field)
         {
             var search = Search(i => i.OrderID == int.Parse(field));
@@ -26,18 +27,18 @@ namespace BackendProyectoFinal.Repositories
             return null;
         }
 
-        public async Task Add(ItemOrder role)
-              => await _context.ItemsOrders.AddAsync(role);
+        public async Task Add(ItemOrder itemOrder)
+              => await _context.ItemsOrders.AddAsync(itemOrder);
 
-        public void Update(ItemOrder role)
+        public void Update(ItemOrder itemOrder)
         {
-            _context.ItemsOrders.Attach(role);
-            _context.ItemsOrders.Entry(role).State = EntityState.Modified;
+            _context.ItemsOrders.Attach(itemOrder);
+            _context.ItemsOrders.Entry(itemOrder).State = EntityState.Modified;
             // AVISA A ENTITY FRAMEWORK QUE FUE MODIFICADO, PARA PODER REALIZAR EL SAVE
         }
 
-        public void Delete(ItemOrder role)
-            => _context.ItemsOrders.Remove(role);
+        public void Delete(ItemOrder itemOrder)
+            => _context.ItemsOrders.Remove(itemOrder);
 
         public async Task Save()
         {
