@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs.Role;
+﻿using BackendProyectoFinal.DTOs.User.Role;
 using BackendProyectoFinal.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;

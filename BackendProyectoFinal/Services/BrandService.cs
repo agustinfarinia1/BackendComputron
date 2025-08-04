@@ -1,8 +1,8 @@
 ﻿using BackendProyectoFinal.Repositories;
 using Microsoft.IdentityModel.Tokens;
 using BackendProyectoFinal.Mappers;
-using BackendProyectoFinal.DTOs.Brand;
 using BackendProyectoFinal.Models;
+using BackendProyectoFinal.DTOs.Product.Brand;
 
 namespace BackendProyectoFinal.Services
 {

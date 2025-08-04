@@ -4,16 +4,18 @@
 - Persistencia en Base de Relacional (SQL).
 - Implementacion de Fluent Validations.
 - Uso de .Env
-- Cifrado AES 
+- Cifrado AES (Implementado en Users y PaymentDetails)
 
 ### Funcionalidades del sistema
-- Gestion de Productos(Categorias,Marcas).
-- Gestion de Usuarios.
-- Gestion de Pedidos y Carrito por usuario.
+- Gestion de Products(Categories,Brands).
+- Gestion de Users.
+- Gestion de Orders y Carts por Users.
+- Gestion de Payments, PaymentMethods y PaymentDetails
 
 ### Proximamente
 
-- Creacion de Endpoints faltantes(MetodoPago,Factura)
+- Creacion de Validaciones.
+- Crear Autenticacion y validar su uso en los EndPoints.
 - Conexion con el Frontend y deploy
 
 ### Modelo de Base de Datos(Actual)

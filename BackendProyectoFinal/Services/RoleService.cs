@@ -1,8 +1,8 @@
 ﻿using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Utils.Mappers;
 using Microsoft.IdentityModel.Tokens;
-using BackendProyectoFinal.DTOs.Role;
 using BackendProyectoFinal.Models;
+using BackendProyectoFinal.DTOs.User.Role;
 
 namespace BackendProyectoFinal.Services
 {
@@ -37,7 +37,8 @@ namespace BackendProyectoFinal.Services
 
         public async Task<RoleDTO?> GetByField(string field)
         {
-            var role = _repository.Search(r => r.RoleID == int.Parse(field)).FirstOrDefault();
+            // Filtra por Name
+            var role = _repository.Search(r => r.Name.ToUpper() == field.ToUpper()).FirstOrDefault();
             if (role != null)
             {
                 return RoleMapper.ConvertRoleToDTO(role);
@@ -57,7 +58,7 @@ namespace BackendProyectoFinal.Services
             return RoleMapper.ConvertRoleToDTO(role) ;
         }
 
-        public async Task<RoleDTO> Update(RoleUpdateDTO RoleUpdateDTO)
+        public async Task<RoleDTO?> Update(RoleUpdateDTO RoleUpdateDTO)
         {
             var role = await _repository.GetById(RoleUpdateDTO.Id);
             if (role != null)
@@ -72,7 +73,7 @@ namespace BackendProyectoFinal.Services
             return null;
         }
 
-        public async Task<RoleDTO> Delete(int id)
+        public async Task<RoleDTO?> Delete(int id)
         {
             var role = await _repository.GetById(id);
             if (role != null)

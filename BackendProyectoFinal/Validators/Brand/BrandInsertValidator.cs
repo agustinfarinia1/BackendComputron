@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs.Brand;
+﻿using BackendProyectoFinal.DTOs.Product.Brand;
 using FluentValidation;
 
 namespace BackendProyectoFinal.Validators.Brand

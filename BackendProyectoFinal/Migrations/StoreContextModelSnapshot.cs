@@ -208,6 +208,86 @@ namespace BackendProyectoFinal.Migrations
                     b.ToTable("OrderStatuses");
                 });
 
+            modelBuilder.Entity("BackendProyectoFinal.Models.Payment", b =>
+                {
+                    b.Property<int>("PaymentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentID"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("OrderID")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("PaidAt")
+                        .HasColumnType("date");
+
+                    b.Property<int>("PaymentMethodID")
+                        .HasColumnType("int");
+
+                    b.HasKey("PaymentID");
+
+                    b.HasIndex("OrderID");
+
+                    b.HasIndex("PaymentMethodID");
+
+                    b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("BackendProyectoFinal.Models.PaymentDetail", b =>
+                {
+                    b.Property<int>("PaymentDetailID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentDetailID"));
+
+                    b.Property<string>("CardHolderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CardType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExpirationDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastFourDigits")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaymentID")
+                        .HasColumnType("int");
+
+                    b.HasKey("PaymentDetailID");
+
+                    b.HasIndex("PaymentID");
+
+                    b.ToTable("PaymentDetails");
+                });
+
+            modelBuilder.Entity("BackendProyectoFinal.Models.PaymentMethod", b =>
+                {
+                    b.Property<int>("PaymentMethodID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentMethodID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PaymentMethodID");
+
+                    b.ToTable("PaymentMethods");
+                });
+
             modelBuilder.Entity("BackendProyectoFinal.Models.Product", b =>
                 {
                     b.Property<int>("ProductID")
@@ -400,6 +480,36 @@ namespace BackendProyectoFinal.Migrations
                         .HasForeignKey("NextOrderStatusID");
 
                     b.Navigation("NextStatus");
+                });
+
+            modelBuilder.Entity("BackendProyectoFinal.Models.Payment", b =>
+                {
+                    b.HasOne("BackendProyectoFinal.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BackendProyectoFinal.Models.PaymentMethod", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("PaymentMethod");
+                });
+
+            modelBuilder.Entity("BackendProyectoFinal.Models.PaymentDetail", b =>
+                {
+                    b.HasOne("BackendProyectoFinal.Models.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("BackendProyectoFinal.Models.Product", b =>

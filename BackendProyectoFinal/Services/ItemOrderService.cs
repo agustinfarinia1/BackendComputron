@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
-using BackendProyectoFinal.DTOs.ItemOrder;
+using BackendProyectoFinal.DTOs.Order.ItemOrder;
 
 namespace BackendProyectoFinal.Services
 {

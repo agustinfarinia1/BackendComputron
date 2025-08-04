@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using BackendProyectoFinal.Mappers;
 using BackendProyectoFinal.Models;
-using BackendProyectoFinal.DTOs.ItemCart;
+using BackendProyectoFinal.DTOs.Cart.ItemCart;
 
 namespace BackendProyectoFinal.Services
 {

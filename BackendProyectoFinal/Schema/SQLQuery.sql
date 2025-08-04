@@ -4,6 +4,8 @@ CREATE DATABASE ProyectoBackendUTN;
 -- Las tablas estan realizadas en base a los Models
 -- Porque el context esta en base a eso
 
+---Tablas---
+
 CREATE TABLE Roles(
 	RoleID int IDENTITY,
 	Name VARCHAR(100),
@@ -103,11 +105,42 @@ CREATE TABLE ItemsOrders(
 );
 --Delete From OrderStatuses Where OrderStatusID = 1;
 
+CREATE TABLE PaymentMethods(
+	PaymentMethodID int IDENTITY,
+	Name VARCHAR(100),
+	PRIMARY KEY(PaymentMethodID)
+);
+
+CREATE TABLE Payments(
+	PaymentID int IDENTITY,
+	Amount int NOT NULL,
+	PaidAt date NOT NULL,
+	PaymentMethodID int NOT NULL,
+	OrderID int NOT NULL,
+	PRIMARY KEY(PaymentID),
+	FOREIGN KEY (PaymentMethodID) REFERENCES PaymentMethods(PaymentMethodID),
+	FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);
+
+CREATE TABLE PaymentDetails(
+	PaymentDetailID int IDENTITY,
+	CardHolderName VARCHAR(100) NOT NULL,
+	LastFourDigits VARCHAR(100) NOT NULL,
+	CardType VARCHAR(100) NOT NULL,
+	ExpirationDate VARCHAR(100) NOT NULL,
+	PaymentID int NOT NULL,
+	PRIMARY KEY(PaymentDetailID),
+	FOREIGN KEY (PaymentID) REFERENCES Payments(PaymentID)
+);
+
+---Consultas---
+
+---Users---
 select * from Roles;
 select * from Addresses;
 select * from Users;
 
--- Inner Join con informacion general de Usuario y sus tablas foraneas
+-- Inner Join con informacion general de Users y sus tablas foraneas
 Select U.UserID,U.Email,U.Password,U.FirstName,U.SurName,U.DateOfBirth,D.AddressID,D.Name,D.Number,D.Floor,D.ApartmentNumber,R.RoleID,R.Name 
 From Users as U
 Inner Join Roles as R
@@ -115,13 +148,13 @@ On U.RoleID = R.RoleID
 Inner Join Addresses as D
 On D.AddressID = U.AddressID;
 
---Productos
+---Products---
 
 select * from Brands;
 select * from Products;
 select * from Categories;
 
--- Inner Join con informacion general de Productos y sus tablas foraneas
+-- Inner Join con informacion general de Products y sus tablas foraneas
 Select P.ProductID,P.Title,P.Price,P.Quantity,P.CreationDate,B.BrandID,B.Name,C.CategoryID,C.Name
 From Products as P
 Inner Join Brands as B
@@ -132,12 +165,12 @@ On P.CategoryID = C.CategoryID;
 select * from OrderStatuses
 Order by NextOrderStatusID;
 
---Order
+---Order---
 Select * from Orders;
 Select * from ItemsOrders;
 Select * from OrderStatuses;
 
--- Inner Join que muestra todos los productos que estan dentro del Pedido y sus datos
+-- Inner Join que muestra todos los Products que estan dentro de Orders y sus propiedades
 Select O.OrderID,O.AddressID,IO.ItemOrderID,IO.ProductID,P.Title,P.Price,P.Quantity,P.CreationDate,B.BrandID,B.Name,IO.Quantity,OS.OrderStatusID,OS.Name,O.Canceled
 from Orders as O
 Inner Join OrderStatuses as OS
@@ -149,11 +182,11 @@ On IO.ProductID = P.ProductID
 Inner Join Brands as B
 On P.BrandID = B.BrandID;
 
---Cart
+---Cart---
 Select * from Carts;
 Select * from ItemsCarts;
 
--- Inner Join que muestra todos los productos que estan dentro de los Carts y sus datos
+-- Inner Join que muestra todos los Products que estan dentro de los Carts y sus propiedades
 Select C.CartID,C.UserID,IC.ItemCartID,IC.ProductID,P.Title,P.Price,B.BrandID,B.Name,IC.Quantity
 from Carts as C
 Inner Join ItemsCarts as IC
@@ -162,3 +195,16 @@ Inner Join Products as P
 On IC.ProductID = P.ProductID
 Inner Join Brands as B
 On P.BrandID = B.BrandID;
+
+---Payments---
+Select * from PaymentMethods;
+Select * from Payments;
+Select * from PaymentDetails;
+
+-- Inner Join que muestra todos los Payments y sus propiedades
+Select P.PaymentID,P.Amount,P.PaidAt,P.PaymentMethodID,PM.Name,PD.CardHolderName,PD.LastFourDigits,PD.ExpirationDate,PD.CardType
+from Payments as P
+Inner Join PaymentMethods as PM
+On P.PaymentMethodID = PM.PaymentMethodID
+Inner Join PaymentDetails as PD
+On P.PaymentID = PD.PaymentID;

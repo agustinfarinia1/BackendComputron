@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using BackendProyectoFinal.Services;
-using BackendProyectoFinal.DTOs.ItemOrder;
+using BackendProyectoFinal.DTOs.Order.ItemOrder;
 
 namespace BackendProyectoFinal.Controllers
 {

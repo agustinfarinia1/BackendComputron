@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using BackendProyectoFinal.Services;
-using BackendProyectoFinal.DTOs.Brand;
+using BackendProyectoFinal.DTOs.Product.Brand;
 
 namespace BackendProyectoFinal.Controllers
 {

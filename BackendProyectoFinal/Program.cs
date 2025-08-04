@@ -7,17 +7,20 @@ using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 using BackendProyectoFinal.Services;
 // DTOs
-using BackendProyectoFinal.DTOs.Role;
 using BackendProyectoFinal.DTOs.Address;
 using BackendProyectoFinal.DTOs.User;
-using BackendProyectoFinal.DTOs.Category;
-using BackendProyectoFinal.DTOs.Brand;
+using BackendProyectoFinal.DTOs.User.Role;
 using BackendProyectoFinal.DTOs.Product;
+using BackendProyectoFinal.DTOs.Product.Brand;
+using BackendProyectoFinal.DTOs.Product.Category;
 using BackendProyectoFinal.DTOs.Cart;
-using BackendProyectoFinal.DTOs.ItemCart;
-using BackendProyectoFinal.DTOs.OrderStatus;
+using BackendProyectoFinal.DTOs.Cart.ItemCart;
 using BackendProyectoFinal.DTOs.Order;
-using BackendProyectoFinal.DTOs.ItemOrder;
+using BackendProyectoFinal.DTOs.Order.ItemOrder;
+using BackendProyectoFinal.DTOs.Order.OrderStatus;
+using BackendProyectoFinal.DTOs.Payment;
+using BackendProyectoFinal.DTOs.Payment.PaymentMethod;
+using BackendProyectoFinal.DTOs.Payment.PaymentDetail;
 //Validators
 using BackendProyectoFinal.Validators.Address;
 using BackendProyectoFinal.Validators.Role;
@@ -27,6 +30,7 @@ using BackendProyectoFinal.Validators.Brand;
 using BackendProyectoFinal.Validators.Product;
 using BackendProyectoFinal.Validators.Cart;
 using BackendProyectoFinal.Validators.Order;
+using BackendProyectoFinal.Validators.Payment;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +63,9 @@ builder.Services.AddKeyedScoped<IItemListService<ItemCartDTO,ItemCartInsertDTO,I
 builder.Services.AddKeyedScoped<IOrderStatusService, OrderStatusService>("OrderStatusService");
 builder.Services.AddKeyedScoped<IListService<OrderDTO, OrderInsertDTO, OrderUpdateDTO>, OrderService>("OrderService");
 builder.Services.AddKeyedScoped<IItemListService<ItemOrderDTO, ItemOrderInsertDTO, ItemOrderUpdateDTO>, ItemOrderService>("ItemOrderService");
+builder.Services.AddKeyedScoped<ICommonService<PaymentMethodDTO, PaymentMethodInsertDTO, PaymentMethodUpdateDTO>, PaymentMethodService>("PaymentMethodService");
+builder.Services.AddKeyedScoped<ICommonService<PaymentDTO, PaymentInsertDTO, PaymentUpdateDTO>, PaymentService>("PaymentService");
+builder.Services.AddKeyedScoped<ICommonService<PaymentDetailDTO, PaymentDetailInsertDTO, PaymentDetailUpdateDTO>, PaymentDetailService>("PaymentDetailService");
 
 // REPOSITORY
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
@@ -72,6 +79,9 @@ builder.Services.AddScoped<IRepository<OrderStatus>, OrderStatusRepository>();
 builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
 builder.Services.AddScoped<IRepository<ItemCart>, ItemCartRepository>();
 builder.Services.AddScoped<IRepository<ItemOrder>, ItemOrderRepository>();
+builder.Services.AddScoped<IRepository<PaymentMethod>, PaymentMethodRepository>();
+builder.Services.AddScoped<IRepository<Payment>, PaymentRepository>();
+builder.Services.AddScoped<IRepository<PaymentDetail>, PaymentDetailRepository>();
 
 // ENTITY FRAMEWORK
 builder.Services.AddDbContext<StoreContext>(options =>
@@ -101,6 +111,12 @@ builder.Services.AddScoped<IValidator<ItemCartInsertDTO>, ItemCartInsertValidato
 builder.Services.AddScoped<IValidator<ItemCartUpdateDTO>, ItemCartUpdateValidator>();
 builder.Services.AddScoped<IValidator<ItemOrderInsertDTO>, ItemOrderInsertValidator>();
 builder.Services.AddScoped<IValidator<ItemOrderUpdateDTO>, ItemOrderUpdateValidator>();
+builder.Services.AddScoped<IValidator<PaymentMethodInsertDTO>, PaymentMethodInsertValidator>();
+builder.Services.AddScoped<IValidator<PaymentMethodUpdateDTO>, PaymentMethodUpdateValidator>();
+builder.Services.AddScoped<IValidator<PaymentInsertDTO>, PaymentInsertValidator>();
+builder.Services.AddScoped<IValidator<PaymentUpdateDTO>, PaymentUpdateValidator>();
+builder.Services.AddScoped<IValidator<PaymentDetailInsertDTO>, PaymentDetailInsertValidator>();
+builder.Services.AddScoped<IValidator<PaymentDetailUpdateDTO>, PaymentDetailUpdateValidator>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

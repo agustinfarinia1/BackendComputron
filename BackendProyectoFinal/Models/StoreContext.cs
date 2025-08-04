@@ -18,9 +18,8 @@ namespace BackendProyectoFinal.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<ItemCart> ItemsCarts { get; set; }
         public DbSet<ItemOrder> ItemsOrders { get; set; }
-        /*
-        public DbSet<TipoFactura> TipoFacturas { get; set; }
-        public DbSet<Factura> Facturas { get; set; }
-        */
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<PaymentDetail> PaymentDetails { get; set; }
     }
 }

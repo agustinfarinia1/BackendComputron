@@ -2,8 +2,8 @@
 using BackendProyectoFinal.Models;
 using BackendProyectoFinal.Repositories;
 using Microsoft.IdentityModel.Tokens;
-using BackendProyectoFinal.DTOs.ItemOrder;
 using BackendProyectoFinal.DTOs.Order;
+using BackendProyectoFinal.DTOs.Order.ItemOrder;
 
 namespace BackendProyectoFinal.Services
 {

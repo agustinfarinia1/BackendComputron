@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs.Role;
+﻿using BackendProyectoFinal.DTOs.User.Role;
 using FluentValidation;
 
 namespace BackendProyectoFinal.Validators.Role

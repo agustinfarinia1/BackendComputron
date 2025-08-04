@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using BackendProyectoFinal.Services;
-using BackendProyectoFinal.DTOs.ItemCart;
+using BackendProyectoFinal.DTOs.Cart.ItemCart;
 
 namespace BackendProyectoFinal.Controllers
 {

@@ -1,4 +1,4 @@
-﻿using BackendProyectoFinal.DTOs.ItemOrder;
+﻿using BackendProyectoFinal.DTOs.Order.ItemOrder;
 
 namespace BackendProyectoFinal.DTOs.Order
 {
